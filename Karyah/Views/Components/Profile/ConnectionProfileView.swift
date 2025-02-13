@@ -38,7 +38,7 @@ struct ConnectionProfileView: View {
                 .padding(.horizontal)
                 
                 // Profile Image
-                Image("Profile")
+                Image(systemName: "person.circle")
                     .resizable()
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())

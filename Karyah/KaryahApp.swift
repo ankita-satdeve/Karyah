@@ -12,8 +12,9 @@ struct KaryahApp: App {
     @StateObject var authManager = AuthManager() // Ensure it's a single instance
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authManager) // Inject it here, now  all child views (including DashboardView) will have access to authManager.
+            ConnectionProfileView()
+//            ContentView()
+//                .environmentObject(authManager) // Inject it here, now  all child views (including DashboardView) will have access to authManager.
         }
     }
 }
