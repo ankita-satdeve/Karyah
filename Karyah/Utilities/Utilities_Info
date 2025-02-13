@@ -1,0 +1,13 @@
+Contains helper functions, constants, and extensions.
+
+Constants.swift: Store app-wide constants like URLs, colors, and font names.
+Extensions.swift: Add custom methods or properties to existing types (e.g., custom color initializers).
+HelperFunctions.swift: Centralize common utility functions (e.g., formatting, date manipulation).
+Logger.swift: Manage app logs for debugging and production environments.
+
+├── Constants.swift
+│   ├── Extensions.swift
+│   ├── HelperFunctions.swift
+│   ├── CustomFonts.swift
+│   ├── Logger.swift
+│   └── UserDefaultsManager.swift

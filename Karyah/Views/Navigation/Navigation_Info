@@ -1,0 +1,8 @@
+Handles app navigation, including NavigationManager.swift and TabBarView.swift.
+
+NavigationManager.swift: Use it to control navigation logic globally (e.g., switching between screens).
+
+
+├── AppRouter.swift
+│       ├── TabBarView.swift
+│       └── NavigationManager.swift

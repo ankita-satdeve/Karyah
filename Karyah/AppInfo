@@ -1,0 +1,39 @@
+🚀 Key Scenarios
+
+    User is NOT registered → Show OTPView (Signup Screen).
+    User is registered but logged out → Show PINView (Login Screen).
+    User is logged in → Show DashboardView.
+    User logs out → PINView appears.
+    If user stays logged in for 30+ days → Force login via PINView.
+
+
+🎯 Final Flow of the App
+
+    User opens the app
+        If not registered → OTPView appears.
+        If registered but not logged in → PINView appears.
+        If already logged in → DashboardView appears.
+        If last login was 30+ days ago → PINView appears.
+
+    User logs in (PINView)
+        After successful PIN entry, DashboardView loads.
+
+    User logs out (DashboardView)
+        Goes back to PINView, and token is removed.
+
+    User stays logged in but after 30 days
+        Auto-redirects to PINView.
+
+💡 Summary
+Condition    Screen Shown
+First-time user (not registered)    OTPView
+Registered but logged out    PINView
+User logged in within 30 days    DashboardView
+User logged in but after 30+ days    PINView
+User clicks Logout    PINView
+✅ Why This Works Well
+
+    Centralized authentication logic (AuthManager) for easy management.
+    Uses UserDefaults to persist login state.
+    Flexible navigation switching (currentScreen) for smooth transitions.
+    Automatically logs out after 30 days.

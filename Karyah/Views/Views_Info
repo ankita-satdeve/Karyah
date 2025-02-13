@@ -1,0 +1,6 @@
+UI, which is visible to the screen
+
+├── HomeView.swift
+│   │   ├── ProfileView.swift
+│   │   ├── SettingsView.swift
+│   │   └── LoginView.swift

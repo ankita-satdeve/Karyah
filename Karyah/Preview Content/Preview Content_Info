@@ -1,0 +1,5 @@
+Mock data and preview providers for SwiftUI live previews.
+
+├── MockData.swift
+│   ├── PreviewProvider.swift
+│   └── SnapshotTests.swift

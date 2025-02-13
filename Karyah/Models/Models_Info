@@ -1,0 +1,5 @@
+pojo/ data classes
+
+├── User.swift
+│   ├── Product.swift
+│   └── APIResponse.swift

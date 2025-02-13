@@ -1,0 +1,7 @@
+Holds logic for handling state and business logic (MVVM architecture).
+
+
+├── HomeViewModel.swift
+│   ├── ProfileViewModel.swift
+│   ├── SettingsViewModel.swift
+│   └── AuthViewModel.swift

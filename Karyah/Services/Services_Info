@@ -1,0 +1,6 @@
+Manages networking, authentication, and database operations.
+
+├── APIService.swift
+│   ├── AuthenticationService.swift
+│   ├── DatabaseService.swift
+│   └── NetworkManager.swift

@@ -1,0 +1,5 @@
+Stores themes, colors, typography, and localization.
+
+├── LocalizedStrings.swift
+│   ├── ThemeColors.swift
+│   └── Typography.swift
