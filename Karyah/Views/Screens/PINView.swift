@@ -84,7 +84,7 @@ struct PINView: View {
                     .cornerRadius(30, corners: [.topLeft, .topRight])
                     .offset(y: keyboardManager.offset)
                 }
-                .padding(.bottom, 40) // Ensures content is fully scrollable
+                .padding(.bottom, 40)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .onTapGesture {
