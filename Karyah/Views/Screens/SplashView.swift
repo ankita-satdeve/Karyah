@@ -24,6 +24,6 @@ struct SplashView: View {
 struct SplashView_Previews: PreviewProvider {
     static var previews: some View {
         SplashView()
-            .previewDevice("iPhone 14 Pro")
+            .previewDevice("iPhone 16 Pro")
     }
 }

@@ -72,6 +72,7 @@ struct PINView: View {
                                 action: {
                                     pinViewModel.authManager = authManager
                                     pinViewModel.verifyPIN()
+                                    authManager.login(token: "user-session-token")
                                 }
                             )
                         }
@@ -103,6 +104,6 @@ struct PINView_Previews: PreviewProvider {
     static var previews: some View {
         PINView()
             .environmentObject(AuthManager()) // Inject the AuthManager
-            .previewDevice("iPhone 14 Pro")
+            .previewDevice("iPhone 16 Pro")
     }
 }

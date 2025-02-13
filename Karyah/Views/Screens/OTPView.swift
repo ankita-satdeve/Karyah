@@ -106,6 +106,7 @@ struct OTPView: View {
                                     .foregroundColor(Color(.systemGray2))
                                 
                                 Button(action: {
+                                    UserDefaults.standard.setValue(true, forKey: "isRegistered")
                                     authManager.currentScreen = .pinView
                                 }) {
                                     Text("Login with PIN")
@@ -148,7 +149,7 @@ struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
         OTPView()
             .environmentObject(AuthManager())
-            .previewDevice("iPhone 14 Pro")
+            .previewDevice("iPhone 16 Pro")
     }
 }
 

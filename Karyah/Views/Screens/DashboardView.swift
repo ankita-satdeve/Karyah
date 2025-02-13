@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @EnvironmentObject var authManager: AuthManager
     @StateObject private var dashboardViewModel = DashboardViewModel()
 
     var body: some View {
@@ -40,6 +41,18 @@ struct DashboardView: View {
                         }
                         .padding(.top, 10) // Adjust for header height
                         .padding(.bottom, 80) // Adjust for floating button
+                        
+                        VStack {
+                            Text("🏠 Welcome to Dashboard!")
+                                .font(.largeTitle)
+                            
+                            Button("Logout") {
+                                authManager.logout()
+                            }
+                            .buttonStyle(.borderedProminent)
+                        }
+                        .padding()
+                        
                     }
                 }
 
@@ -60,16 +73,7 @@ struct DashboardView: View {
 
 
 
-//        VStack {
-//            Text("🏠 Welcome to Dashboard!")
-//                .font(.largeTitle)
-//            
-//            Button("Logout") {
-//                authManager.logout()
-//            }
-//            .buttonStyle(.borderedProminent)
-//        }
-//        .padding()
+       
  
 
 struct DashboardView_Previews: PreviewProvider {

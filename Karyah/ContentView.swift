@@ -15,7 +15,7 @@ struct ContentView: View {
         case .splash:
             SplashView()
         case .otpView:
-            OTPView().environmentObject(authManager)
+            OTPView().environmentObject(authManager) // here .env not there
         case .pinView:
             PINView().environmentObject(authManager)
         case .dashboard:
