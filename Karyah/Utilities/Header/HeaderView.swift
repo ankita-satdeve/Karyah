@@ -46,13 +46,13 @@ struct HeaderView: View {
                         Button(action: {
                             navigateToNotification = true
                         }) {
-                            Image("notifications")
+                            Image("notification")
                                 .font(.title2)
                                 .foregroundColor(.white)
                                 .padding()
                         }
                         .navigationDestination(isPresented: $navigateToNotification) {
-//                            RegisterView()//Notifications()
+                            //Notifications()
                         }
                     }
                     .padding(.horizontal)

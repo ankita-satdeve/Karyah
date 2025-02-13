@@ -53,10 +53,9 @@ struct PINView: View {
                                     .stroke(Color(.systemGray2), lineWidth: 1)
                             )
                             .keyboardType(.default)
-                            .focused($focusedIndex, equals: -1) // Assign -1 for the first input field
-                        //                                .onChange(of: pinViewModel.pinModel.phoneEmail) {
-                        //                                    viewModel.sendOTP()
-                        //                                }
+                            .autocapitalization(.none) // Prevents automatic capitalization
+                            .disableAutocorrection(true) // Optional: Prevents autocorrection
+                            .focused($focusedIndex, equals: -1)
                         
                         Text("Enter PIN:")
                             .font(.subheadline)

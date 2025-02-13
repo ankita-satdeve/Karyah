@@ -17,7 +17,7 @@ struct SidebarView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image("Profile")
+                Image("profile")
                     .resizable()
                     .frame(width: 40, height: 40)
                     .clipShape(Circle())

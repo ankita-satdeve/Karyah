@@ -9,7 +9,7 @@ import Foundation
 
 class DashboardViewModel: ObservableObject {
     @Published var tasks: [TaskModel] = []
-    @Published var projects: [ProjectModel] = []
+//    @Published var projects: [ProjectModel] = []
     @Published var issues: [IssueModel] = []
 
     init() {

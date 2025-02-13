@@ -54,11 +54,13 @@ struct OTPView: View {
                                         .stroke(Color(.systemGray2), lineWidth: 1)
                                 )
                                 .keyboardType(.default)
+                                .autocapitalization(.none) // Prevents automatic capitalization
+                                .disableAutocorrection(true) // Optional: Prevents autocorrection
                                 .focused($focusedIndex, equals: -1) // Assign -1 for the first input field
                                 .onChange(of: otpViewModel.loginModel.phoneEmail) {
                                     otpViewModel.sendOTP()
                                 }
-
+                            
                             Text("Enter OTP:")
                                 .font(.subheadline)
                                 .foregroundColor(.primary)
