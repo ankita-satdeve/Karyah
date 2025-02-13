@@ -42,7 +42,7 @@ struct OTPView: View {
                             Text("Get Started !")
                                 .font(.title2)
                                 .foregroundColor(.primary)
-                                .padding(.top, 20)
+                                .padding(.top, 15)
 
                             TextField("Mobile Number / Email", text: $otpViewModel.loginModel.phoneEmail)
                                 .padding()
@@ -63,6 +63,7 @@ struct OTPView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.primary)
                             
+                            // OTP Inputbox
                             PinOtpInputView(code: $otpViewModel.loginModel.otp, length: 4)
 
                             if otpViewModel.loginModel.isOTPSent {

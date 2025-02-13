@@ -10,11 +10,10 @@ import Alamofire
 
 class LoginViewModel: ObservableObject {
     @Published var loginModel = LoginModel()
-    weak var authManager: AuthManager?  // ✅ Use weak reference to prevent memory leaks
+    weak var authManager: AuthManager?  // Use weak reference to prevent memory leaks
     @Published var navigateToRegister = false
     @Published var navigateToDashboard = false
     @Published var otp: String = "    "
-//    @Published var pin: String = "    "
     var timerSubscription: Timer?
     var url: String = "\(BaseURL.url)/auth"
     
@@ -58,8 +57,7 @@ class LoginViewModel: ObservableObject {
     
     
     func verifyOTP() {
-//        let apiUrl = "\(url)/verify-otp"
-        let apiUrl = "https://api.karyah.in/api/auth/verify-otp"
+        let apiUrl = "\(url)/verify-otp"
         let parameters: [String: Any] = [
             "email": loginModel.phoneEmail,
             "otp": loginModel.otp
@@ -72,12 +70,6 @@ class LoginViewModel: ObservableObject {
                 case .success(let result):
                     UserDefaults.standard.set(result.token, forKey: "userToken")
                     print("Token saved: \(result.token)")
-                    
-//                    if self.loginModel.isRegistered {
-                    //                        self.navigateToDashboard = true
-                    //                    } else {
-                    //                        self.navigateToRegister = true
-                    //                    }
                     
                     DispatchQueue.main.async {
                         self.authManager?.currentScreen = .dashboard  // ✅ Navigate using authManager
@@ -113,9 +105,8 @@ class LoginViewModel: ObservableObject {
                         UserDefaults.standard.set(result.token, forKey: "userToken")
                         print("Token saved: \(result.token)")
                         
-                        // ✅ Navigate to Dashboard
                         DispatchQueue.main.async {
-                            self.navigateToDashboard = true
+                            self.authManager?.currentScreen = .dashboard  // ✅ Navigate to Dashboard
                         }
                         
                         

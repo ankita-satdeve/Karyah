@@ -17,7 +17,7 @@ struct ContentView: View {
         case .otpView:
             OTPView().environmentObject(authManager)
         case .pinView:
-            PINView()
+            PINView().environmentObject(authManager)
         case .dashboard:
             DashboardView().environmentObject(authManager)
         }
