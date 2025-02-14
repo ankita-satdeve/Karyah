@@ -43,19 +43,9 @@ struct PINView: View {
                             .foregroundColor(.primary)
                             .padding(.top, 20)
                         
-                        TextField("Mobile Number / Email", text: $pinViewModel.loginModel.phoneEmail)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.9, height: geometry.size.width * 0.13)
-                            .background(Color(.systemBackground))
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.systemGray2), lineWidth: 1)
-                            )
-                            .keyboardType(.default)
-                            .autocapitalization(.none) // Prevents automatic capitalization
-                            .disableAutocorrection(true) // Optional: Prevents autocorrection
-                            .focused($focusedIndex, equals: -1)
+                        //TextField
+                        CustomTextField(placeholder: "Mobile Number / Email", text: $pinViewModel.loginModel.phoneEmail)
+                        
                         
                         Text("Enter PIN:")
                             .font(.subheadline)

@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct LargeCustomTextField: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    var placeholder: String
+    @Binding var text: String
+    @FocusState private var isFocused: Bool
 
-#Preview {
-    LargeCustomTextField()
+    var body: some View {
+        TextField(placeholder, text: $text)
+            .padding()
+            .frame(height: 100)
+            .background(Color(.systemBackground))
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color(.systemGray2), lineWidth: 1)
+            )
+            .keyboardType(.default)
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+            .focused($isFocused)
+    }
 }

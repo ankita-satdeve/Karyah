@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct SettingsRow: View {
+    let title: String
+    let icon: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Text(title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Image(systemName: icon)
+        }
+        .padding()
     }
-}
-
-#Preview {
-    SettingsRow()
 }

@@ -15,7 +15,7 @@ class LoginViewModel: ObservableObject {
     @Published var navigateToDashboard = false
     @Published var otp: String = "    "
     var timerSubscription: Timer?
-    var url: String = "\(BaseURL.url)/auth"
+    let url: String = "\(BaseURL.url)/auth"
     
     func sendOTP() {
         guard isValidInput(loginModel.phoneEmail) else {

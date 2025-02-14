@@ -83,11 +83,29 @@ struct ConnectionProfileView: View {
                         .bold()
                     
                     HStack {
-                        CategoryButton(title: "Category 1", color: Color(UIColor.systemBackground))
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(hex: "#C6381E"), Color(hex: "#9E240F")]), startPoint: .bottomTrailing, endPoint: .topLeading))
-                            .cornerRadius(10)
-                        CategoryButton(title: "Category 2", color: .gray)
-                        CategoryButton(title: "Category 3", color: .gray)
+                        CategoryButton(
+                            title: "Category 1",
+                            isSelected: false, // Update this based on selection logic
+                            action: { print("Category 1 tapped") }
+                        )
+                        .background(LinearGradient(
+                            gradient: Gradient(colors: [Color(hex: "#C6381E"), Color(hex: "#9E240F")]),
+                            startPoint: .bottomTrailing,
+                            endPoint: .topLeading
+                        ))
+                        .cornerRadius(10)
+                        
+                        CategoryButton(
+                            title: "Category 2",
+                            isSelected: false, // Update based on selection logic
+                            action: { print("Category 2 tapped") }
+                        )
+                        
+                        CategoryButton(
+                            title: "Category 3",
+                            isSelected: false, // Update based on selection logic
+                            action: { print("Category 3 tapped") }
+                        )
                     }
                     
                 }
@@ -102,20 +120,20 @@ struct ConnectionProfileView: View {
 }
 
 // Category Button Component
-struct CategoryButton: View {
-    var title: String
-    var color: Color
-    
-    var body: some View {
-        Text(title)
-            .font(.subheadline)
-            .padding(.vertical, 8)
-            .padding(.horizontal, 16)
-            .background(color.opacity(0.2))
-            .foregroundColor(color)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-    }
-}
+//struct CategoryButton: View {
+//    var title: String
+//    var color: Color
+//    
+//    var body: some View {
+//        Text(title)
+//            .font(.subheadline)
+//            .padding(.vertical, 8)
+//            .padding(.horizontal, 16)
+//            .background(color.opacity(0.2))
+//            .foregroundColor(color)
+//            .clipShape(RoundedRectangle(cornerRadius: 8))
+//    }
+//}
 
 // Preview
 struct ConnectionProfileView_Previews: PreviewProvider {

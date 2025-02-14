@@ -7,12 +7,29 @@
 
 import SwiftUI
 
-struct ProfileViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+class ProfileViewModel: ObservableObject {
+    @Published var username: String = "User Name"
+    @Published var bio: String = ""
+    @Published var phoneNumber: String = ""
+    @Published var email: String = ""
+    @Published var dateOfBirth: String = ""
+    @Published var gender: Gender = .other
+    @Published var address: String = ""
+    @Published var categories: [String] = ["Category 1", "Category 2", "Category 3"]
+    @Published var selectedCategory: String? = nil
+    @Published var locations: [String] = ["Pune", "Mumbai", "Bengaluru"]
+    @Published var selectedLocation: String? = nil
+    
+    func changeProfileImage() {}
+    func selectCategory(_ category: String) { selectedCategory = category }
+    func selectLocation(_ location: String) { selectedLocation = location }
+    func saveChanges() {}
 }
 
-#Preview {
-    ProfileViewModel()
+enum Gender: String, CaseIterable {
+    case male = "Male"
+    case female = "Female"
+    case other = "Gender"
 }
+
+

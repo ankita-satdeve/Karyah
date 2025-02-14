@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct CategoryLocationBackground: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    var isSelected: Bool
 
-#Preview {
-    CategoryLocationBackground()
+    var body: some View {
+        Group {
+            if isSelected {
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(hex: "#C6381E"),
+                        Color(hex: "#9E240F")
+                    ]),
+                    startPoint: .trailing,
+                    endPoint: .leading
+                )
+            } else {
+                Color.gray.opacity(0.2)
+            }
+        }
+    }
 }

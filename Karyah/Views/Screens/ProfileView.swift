@@ -52,17 +52,17 @@ struct ProfileView: View {
                                 placeholder: "DD/MM/YYYY",
                                 text: $userProfileViewModel.dateOfBirth
                             )
-                            .frame(width: geometry.size.width * 0.45)
+                            
 
-                            Picker("Gender", selection: $userProfileViewModel.gender) {
-                                ForEach(Gender.allCases, id: \.self) { gender in
-                                    Text(gender.rawValue)
-                                        .foregroundColor(.primary)
-                                        .tag(gender)
-                                }
-                            }
-                            .pickerStyle(MenuPickerStyle())
-                            .frame(width: geometry.size.width * 0.45, height: 50)
+//                            Picker("Gender", selection: $userProfileViewModel.gender) {
+//                                ForEach(Gender.allCases, id: \.self) { gender in
+//                                    Text(gender.rawValue)
+//                                        .foregroundColor(.primary)
+//                                        .tag(gender)
+//                                }
+//                            }
+//                            .pickerStyle(MenuPickerStyle())
+//                            .frame(width: geometry.size.width * 0.45, height: 50)
                             .background(Color(.systemBackground))
                             .cornerRadius(10)
                             .overlay(
@@ -77,9 +77,9 @@ struct ProfileView: View {
                     .padding(.horizontal)
                     
                     CategorySelectionView(viewModel: userProfileViewModel)
-                    
+                        
                     LocationSelectionView(viewModel: userProfileViewModel)
-                    
+                        .padding(.horizontal, 20)
                     SettingsOptionsView()
                     
                     ReusableButton(
@@ -88,10 +88,11 @@ struct ProfileView: View {
                         isDisabled: false,
                         action: userProfileViewModel.fetchUserProfile
                     )
-                    .padding()
+//                    .padding()
                 }
                 .padding()
             }
+            
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
