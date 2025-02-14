@@ -9,40 +9,85 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject private var userProfileViewModel = UserProfileViewModel()
+    @State private var showActionSheet = false
+    @State private var showImagePicker = false
+    @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(spacing: 20) {
                     
-                    ProfileImageView(url: userProfileViewModel.user?.profilePhoto, geometry: geometry)
-                    
-                    Text(userProfileViewModel.user?.name ?? "User Name")
-                        .font(.title)
-                        .foregroundColor(.primary)
-                        .accessibilityLabel("User Name")
-                    
-                    VStack(spacing: 10) {
-                        LargeCustomTextField(
-                            placeholder: "Bio",
-                            text: Binding(
-                                get: { userProfileViewModel.user?.bio ?? "" },
-                                set: { userProfileViewModel.user?.bio = $0 }
-                            )
-                        )
+                    //                    ProfileImageView(url: userProfileViewModel.user?.profilePhoto, geometry: geometry)
+                    ZStack {
+//                        VStack {
+                            if let image = userProfileViewModel.selectedImage {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.crop.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                                    .foregroundColor(.gray)
+                                //                            }
+                                
+                                //                            VStack {
+                                Button(action: {
+                                    showActionSheet = true
+                                }) {
+                                    Image(systemName: "camera.fill")
+                                        .font(.largeTitle)
+                                        .padding()
+                                }
+                                .padding(.leading, 120)
+                                .padding(.top, 100)
+                                .actionSheet(isPresented: $showActionSheet) {
+                                    ActionSheet(title: Text("Choose an option"), buttons: [
+                                        .default(Text("Open Camera")) { userProfileViewModel.showImagePicker(source: .camera) },
+                                        .default(Text("Upload from Gallery")) { userProfileViewModel.showImagePicker(source: .photoLibrary) },
+                                        .cancel()
+                                    ])
+                                    //                                }
+                                }
+                                .sheet(isPresented: $showImagePicker) {
+                                    ImagePicker(sourceType: sourceType, selectedImage: $userProfileViewModel.profilePhoto)
+                                }
+                            }
+                        }
                         
-                        CustomTextField(
-                            placeholder: "Phone Number",
-                            text: Binding(
-                                get: { userProfileViewModel.user?.phone ?? "" },
-                                set: { userProfileViewModel.user?.phone = $0 }
-                            )
-                        )
                         
-                        CustomTextField(
-                            placeholder: "Email",
-                            text: Binding(
-                                get: { userProfileViewModel.user?.email ?? "" },
+                        
+                        
+                        Text(userProfileViewModel.user?.name ?? "User Name")
+                            .font(.title)
+                            .foregroundColor(.primary)
+                            .accessibilityLabel("User Name")
+                        
+                        VStack(spacing: 10) {
+                            LargeCustomTextField(
+                                placeholder: "Bio",
+                                text: Binding(
+                                    get: { userProfileViewModel.user?.bio ?? "" },
+                                    set: { userProfileViewModel.user?.bio = $0 }
+                                )
+                            )
+                            
+                            CustomTextField(
+                                placeholder: "Phone Number",
+                                text: Binding(
+                                    get: { userProfileViewModel.user?.phone ?? "" },
+                                    set: { userProfileViewModel.user?.phone = $0 }
+                                )
+                            )
+                            
+                            CustomTextField(
+                                placeholder: "Email",
+                                text: Binding(
+                                    get: { userProfileViewModel.user?.email ?? "" },
                                 set: { userProfileViewModel.user?.email = $0 }
                             )
                         )
@@ -86,11 +131,16 @@ struct ProfileView: View {
                         title: "Save Changes →",
                         foregroundColor: .white,
                         isDisabled: false,
-                        action: userProfileViewModel.fetchUserProfile
+//                        action: userProfileViewModel.fetchUserProfile
+                        action: userProfileViewModel.uploadProfilePhoto
                     )
-//                    .padding()
+                    .padding()
                 }
                 .padding()
+                .sheet(isPresented: $showImagePicker) {
+                    ImagePicker(sourceType: sourceType, selectedImage: $userProfileViewModel.profilePhoto)
+                }
+
             }
             
         }

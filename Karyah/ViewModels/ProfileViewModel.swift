@@ -19,11 +19,20 @@ class ProfileViewModel: ObservableObject {
     @Published var selectedCategory: String? = nil
     @Published var locations: [String] = ["Pune", "Mumbai", "Bengaluru"]
     @Published var selectedLocation: String? = nil
+    @Published var selectedImage: UIImage? = nil
+    @Published var isShowingImagePicker = false
+    @State private var showActionSheet = false
+    @Published var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
     func changeProfileImage() {}
     func selectCategory(_ category: String) { selectedCategory = category }
     func selectLocation(_ location: String) { selectedLocation = location }
     func saveChanges() {}
+    
+    func showImagePicker(source: UIImagePickerController.SourceType) {
+            self.sourceType = source
+            self.isShowingImagePicker = true
+        }
 }
 
 enum Gender: String, CaseIterable {

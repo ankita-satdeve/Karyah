@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import PhotosUI
+import UIKit
 import Alamofire
 
 class UserProfileViewModel: ObservableObject {
@@ -16,9 +18,12 @@ class UserProfileViewModel: ObservableObject {
     @Published var categories: [String] = ["Category 1", "Category 2", "Category 3"]
     @Published var locations: [String] = ["Location 1", "Location 2", "Location 3"]
     @Published var selectedLocation: String? = nil
-
-       
     @Published var selectedCategory: String? = nil
+    @Published var selectedImage: UIImage? = nil
+    @Published var isShowingImagePicker = false
+    @Published var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    @Published var profilePhoto: UIImage?
+    
     let url: String = "\(BaseURL.url)/auth"
     
     func selectCategory(_ category: String) {
@@ -28,6 +33,11 @@ class UserProfileViewModel: ObservableObject {
     func selectLocation(_ location: String) {
         selectedLocation = location
     }
+    
+    func showImagePicker(source: UIImagePickerController.SourceType) {
+            self.sourceType = source
+            self.isShowingImagePicker = true
+        }
     
     func fetchUserProfile() {
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
@@ -55,5 +65,32 @@ class UserProfileViewModel: ObservableObject {
                 }
             }
     }
+    
+    
+    func uploadProfilePhoto() {
+        guard let image = profilePhoto else {
+                print("No image selected")
+                return
+            }
+            
+            let url = "https://api.karyah.in/api/auth/user"
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // Replace with actual token
+                "Content-Type": "multipart/form-data"
+            ]
+            
+            AF.upload(multipartFormData: { formData in
+                if let imageData = image.jpegData(compressionQuality: 0.8) {
+                    formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
+                }
+            }, to: url, method: .put, headers: headers).responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    print("Upload Success: \(data)")
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
+                }
+            }
+        }
 }
 
