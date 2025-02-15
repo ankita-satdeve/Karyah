@@ -17,26 +17,47 @@ struct ProfileView: View {
         ScrollView {
             VStack(spacing: 20) {
                 
+                
                 // Profile Image
                 ZStack {
-                    if let image = userProfileViewModel.selectedImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                    } else {
-                        Image(systemName: "person.crop.circle")
+                    if let selectedImage = userProfileViewModel.selectedImage {
+                        Image(uiImage: selectedImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 120, height: 120)
+                            .clipShape(Circle())
+                    } else if let imageUrlString = userProfileViewModel.user?.profilePhoto,
+                              let imageUrl = URL(string: imageUrlString) {
+                        AsyncImage(url: imageUrl) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 120, height: 120)
+                                    .clipShape(Circle())
+                            case .failure:
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 120, height: 120)
+                                    .foregroundColor(.gray)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
                             .foregroundColor(.gray)
                     }
                     
                     // Camera Button
                     Button(action: {
-                        print("Opening Action Sheet...")
                         showActionSheet = true
                     }) {
                         Image(systemName: "camera.fill")
@@ -48,17 +69,16 @@ struct ProfileView: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color.white, lineWidth: 2))
                     }
-
                     .offset(x: 35, y: 35)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
-
+                
                 Text(userProfileViewModel.user?.name ?? "User Name")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                     .accessibilityLabel("User Name")
-
+                
                 VStack(spacing: 10) {
                     LargeCustomTextField(
                         placeholder: "Bio",
@@ -90,7 +110,7 @@ struct ProfileView: View {
                     )
                     
                     CustomTextField(placeholder: "Address",
-                        text: $userProfileViewModel.address)
+                                    text: $userProfileViewModel.address)
                     
                 }
                 .padding()
@@ -103,31 +123,31 @@ struct ProfileView: View {
                 //                    )
                 //                    .frame(maxWidth: 140)
                 
-                    // Uncomment this to enable gender selection
-//                    Picker("Gender", selection: $userProfileViewModel.gender) {
-//                        ForEach(Gender.allCases, id: \.self) { gender in
-//                            Text(gender.rawValue)
-//                                .foregroundColor(.primary)
-//                                .tag(gender)
-//                        }
-//                    }
-//                    .pickerStyle(MenuPickerStyle())
-//                    .frame(maxWidth: 140)
-//                }
+                // Uncomment this to enable gender selection
+                //                    Picker("Gender", selection: $userProfileViewModel.gender) {
+                //                        ForEach(Gender.allCases, id: \.self) { gender in
+                //                            Text(gender.rawValue)
+                //                                .foregroundColor(.primary)
+                //                                .tag(gender)
+                //                        }
+                //                    }
+                //                    .pickerStyle(MenuPickerStyle())
+                //                    .frame(maxWidth: 140)
+                //                }
                 
                 
-//                    .multilineTextAlignment(.center)
-//                    .padding(.top, 10)
-//                    .frame(maxWidth: 300)
-
+                //                    .multilineTextAlignment(.center)
+                //                    .padding(.top, 10)
+                //                    .frame(maxWidth: 300)
+                
                 CategorySelectionView(viewModel: userProfileViewModel)
-//                    .frame(maxWidth: 300)
+                //                    .frame(maxWidth: 300)
                 
                 LocationSelectionView(viewModel: userProfileViewModel)
-//                    .frame(maxWidth: 300)
+                //                    .frame(maxWidth: 300)
                 
                 SettingsOptionsView()
-
+                
                 ReusableButton(
                     title: "Save  →",
                     foregroundColor: .white,
@@ -136,32 +156,33 @@ struct ProfileView: View {
                 )
                 .padding()
             }
+            .onAppear {
+                userProfileViewModel.fetchUserProfile()
+            }
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(title: Text("Select Image"), buttons: [
+                    .default(Text("Choose from Library")) {
+                        userProfileViewModel.sourceType = .photoLibrary
+                        userProfileViewModel.isShowingImagePicker = true
+                    },
+                    .cancel()
+                ])
+            }
+            .sheet(isPresented: $userProfileViewModel.isShowingImagePicker, onDismiss: {
+                userProfileViewModel.uploadProfilePhoto() // Upload the image after selection
+            }) {
+                ImagePicker(
+                    sourceType: userProfileViewModel.sourceType,
+                    selectedImage: $userProfileViewModel.selectedImage
+                )
+            }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 20) // Ensures everything stays within screen bounds
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            userProfileViewModel.fetchUserProfile()
-        }
-        .actionSheet(isPresented: $showActionSheet) {
-            ActionSheet(title: Text("Choose an option"), buttons: [
-                .default(Text("Open Camera")) { userProfileViewModel.showImagePicker(source: .camera) },
-                .default(Text("Upload from Gallery")) { userProfileViewModel.showImagePicker(source: .photoLibrary) },
-                .cancel()
-            ])
-        }
-        .sheet(isPresented: $userProfileViewModel.isShowingImagePicker) {
-            ImagePicker(
-                sourceType: userProfileViewModel.sourceType,
-                selectedImage: Binding(
-                    get: { userProfileViewModel.selectedImage },
-                    set: { newImage in
-                        userProfileViewModel.selectedImage = newImage
-                    }
-                )
-            )
-        }
+        
+        
     }
 }
 

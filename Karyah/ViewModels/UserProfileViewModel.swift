@@ -22,15 +22,8 @@ class UserProfileViewModel: ObservableObject {
     @Published var isShowingImagePicker = false
     @Published var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Published var profilePhoto: UIImage?
-    
-    @Published var selectedImage: UIImage? = nil {
-        didSet {
-            if let _ = selectedImage {
-                uploadProfilePhoto()
-            }
-        }
-    }
-
+    @Published var selectedImage: UIImage?
+    @Published var profileImage: UIImage?
     
     let url: String = "\(BaseURL.url)/auth"
     
@@ -83,32 +76,75 @@ class UserProfileViewModel: ObservableObject {
     
     
     func uploadProfilePhoto() {
-        guard let image = profilePhoto else {
-            print("No image selected")
-            return
-        }
+        guard let image = selectedImage, let token = UserDefaults.standard.string(forKey: "userToken") else { return }
         
-        let url = "https://api.karyah.in/api/auth/user"
+        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
         
-        let token = UserDefaults.standard.string(forKey: "userToken")
-            
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(token)", 
-            "Content-Type": "multipart/form-data"
-        ]
+        let apiUrl = "\(url)/user"
         
         AF.upload(multipartFormData: { formData in
             if let imageData = image.jpegData(compressionQuality: 0.8) {
-                formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
+                    formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
+                }
+            }, to: apiUrl, method: .put, headers: headers)
+            .uploadProgress { progress in
+                print("Upload Progress: \(progress.fractionCompleted)")
             }
-        }, to: url, method: .put, headers: headers).responseJSON { response in
-            switch response.result {
-            case .success(let data):
-                print("Upload Success: \(data)")
-            case .failure(let error):
-                print("Upload Failed: \(error.localizedDescription)")
+            .responseDecodable(of: UserProfileResponse.self) { response in
+                switch response.result {
+                case .success(let userResponse):
+                    DispatchQueue.main.async {
+                        self.user = userResponse.user
+                        self.selectedImage = nil  // Reset selected image after upload
+                    }
+                    print("Upload Success: \(userResponse)")
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
+                }
             }
         }
+    
+    func updateProfile() {
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            print("Token not found")
+            return
+        }
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token)"
+        ]
+
+        let apiUrl = "\(url)/user"
+        
+        let multipartFormData = MultipartFormData()
+
+        // Append profile photo if available
+        if let image = self.profileImage, let imageData = image.jpegData(compressionQuality: 0.8) {
+            multipartFormData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
+        }
+
+        // Append bio if available
+        if let bio = self.user?.bio, let bioData = bio.data(using: .utf8) {
+            multipartFormData.append(bioData, withName: "bio")
+        }
+
+        AF.upload(multipartFormData: multipartFormData, to: apiUrl, method: .put, headers: headers)
+            .validate()
+            .responseDecodable(of: UserProfileResponse.self) { response in
+                switch response.result {
+                case .success(let userResponse):
+                    DispatchQueue.main.async {
+                        self.user = userResponse.user
+                    }
+                    print("Upload Success: \(userResponse)")
+                case .failure(let error):
+                    print("Upload Failed: \(error.localizedDescription)")
+                    if let data = response.data {
+                        print("Server Response: \(String(data: data, encoding: .utf8) ?? "Invalid Response")")
+                    }
+                }
+            }
     }
+
 }
 
