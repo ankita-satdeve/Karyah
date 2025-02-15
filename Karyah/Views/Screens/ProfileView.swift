@@ -12,6 +12,7 @@ struct ProfileView: View {
     @State private var showActionSheet = false
     @State private var showImagePicker = false
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    @State private var showSuccessAlert = false
     
     var body: some View {
         ScrollView {
@@ -151,12 +152,25 @@ struct ProfileView: View {
                 SettingsOptionsView()
                 
                 ReusableButton(
-                    title: "Save  →",
-                    foregroundColor: .white,
-                    isDisabled: false,
-                    action: userProfileViewModel.updateProfile
-                )
+                                title: "Save Changes  →",
+                                foregroundColor: .white,
+                                isDisabled: false,
+                                action: {
+                                    userProfileViewModel.updateProfile {
+                                        DispatchQueue.main.async {
+                                            showSuccessAlert = true  // ✅ Trigger success alert
+                                        }
+                                    }
+                                }
+                            )
                 .padding()
+            }
+            .alert(isPresented: $showSuccessAlert) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("Profile updated successfully!"),
+                    dismissButton: .default(Text("OK"))
+                )
             }
             .onAppear {
                 userProfileViewModel.fetchUserProfile()

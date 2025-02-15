@@ -104,7 +104,7 @@ class UserProfileViewModel: ObservableObject {
             }
         }
     
-    func updateProfile() {
+    func updateProfile(completion: @escaping () -> Void) {
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
             print("Token not found")
             return
@@ -135,6 +135,7 @@ class UserProfileViewModel: ObservableObject {
                 case .success(let userResponse):
                     DispatchQueue.main.async {
                         self.user = userResponse.user
+                        completion()  // ✅ Call the completion handler
                     }
                     print("Upload Success: \(userResponse)")
                 case .failure(let error):
@@ -145,6 +146,7 @@ class UserProfileViewModel: ObservableObject {
                 }
             }
     }
+
 
 }
 

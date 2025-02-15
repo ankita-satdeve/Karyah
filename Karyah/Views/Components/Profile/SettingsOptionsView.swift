@@ -24,19 +24,8 @@ struct SettingsOptionsView: View {
 
             SettingsRow(title: "Biometric", icon: "chevron.right")
 
-//            if !showChangePin { // Hide "Save Changes" when PIN drawer is open
-//                ReusableButton(
-//                    title: "Save Changes →",
-//                    foregroundColor: .white,
-//                    isDisabled: false,
-//                    action: {
-//                        print("Save Changes Clicked")
-//                    }
-//                )
-//                .padding(.top, 20)
-//            }
         }
-        .padding(.horizontal)
+//        .padding(.horizontal)
         .overlay(
             Group {
                 if showChangePin {
