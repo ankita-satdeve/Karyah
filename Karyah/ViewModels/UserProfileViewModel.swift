@@ -23,21 +23,29 @@ class UserProfileViewModel: ObservableObject {
     @Published var isShowingImagePicker = false
     @Published var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Published var profilePhoto: UIImage?
+
     
     let url: String = "\(BaseURL.url)/auth"
     
     func selectCategory(_ category: String) {
-            selectedCategory = category
-        }
+        selectedCategory = category
+    }
     
     func selectLocation(_ location: String) {
         selectedLocation = location
     }
     
     func showImagePicker(source: UIImagePickerController.SourceType) {
-            self.sourceType = source
-            self.isShowingImagePicker = true
+        DispatchQueue.main.async {
+            if UIImagePickerController.isSourceTypeAvailable(source) {
+                self.sourceType = source
+                self.isShowingImagePicker = true
+            } else {
+                print("Source type \(source) is not available!")
+            }
         }
+    }
+    
     
     func fetchUserProfile() {
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
@@ -46,7 +54,7 @@ class UserProfileViewModel: ObservableObject {
         }
         
         let apiUrl = "\(url)/user"
-    
+        
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
@@ -69,28 +77,28 @@ class UserProfileViewModel: ObservableObject {
     
     func uploadProfilePhoto() {
         guard let image = profilePhoto else {
-                print("No image selected")
-                return
+            print("No image selected")
+            return
+        }
+        
+        let url = "https://api.karyah.in/api/auth/user"
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // Replace with actual token
+            "Content-Type": "multipart/form-data"
+        ]
+        
+        AF.upload(multipartFormData: { formData in
+            if let imageData = image.jpegData(compressionQuality: 0.8) {
+                formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
             }
-            
-            let url = "https://api.karyah.in/api/auth/user"
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // Replace with actual token
-                "Content-Type": "multipart/form-data"
-            ]
-            
-            AF.upload(multipartFormData: { formData in
-                if let imageData = image.jpegData(compressionQuality: 0.8) {
-                    formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
-                }
-            }, to: url, method: .put, headers: headers).responseJSON { response in
-                switch response.result {
-                case .success(let data):
-                    print("Upload Success: \(data)")
-                case .failure(let error):
-                    print("Upload Failed: \(error.localizedDescription)")
-                }
+        }, to: url, method: .put, headers: headers).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                print("Upload Success: \(data)")
+            case .failure(let error):
+                print("Upload Failed: \(error.localizedDescription)")
             }
         }
+    }
 }
 

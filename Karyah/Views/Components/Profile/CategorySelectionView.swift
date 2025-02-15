@@ -14,7 +14,7 @@ struct CategorySelectionView: View {
         VStack() {
             Text("Business Category").font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+                .padding(.horizontal)
             
                 HStack {
                     ForEach(viewModel.categories, id: \.self) { category in
@@ -31,8 +31,6 @@ struct CategorySelectionView: View {
                         .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                         .background(Color.white.cornerRadius(12)) // Ensures a white background
                 )
-            
-//            .padding()
         }
         .frame(maxWidth: .infinity, alignment: .center)
     }
