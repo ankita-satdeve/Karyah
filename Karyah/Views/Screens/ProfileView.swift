@@ -95,6 +95,7 @@ struct ProfileView: View {
                             set: { userProfileViewModel.user?.phone = $0 }
                         )
                     )
+                   
                     
                     CustomTextField(
                         placeholder: "Email",
@@ -141,6 +142,7 @@ struct ProfileView: View {
                 //                    .frame(maxWidth: 300)
                 
                 CategorySelectionView(viewModel: userProfileViewModel)
+                
                 //                    .frame(maxWidth: 300)
                 
                 LocationSelectionView(viewModel: userProfileViewModel)
@@ -152,7 +154,7 @@ struct ProfileView: View {
                     title: "Save  →",
                     foregroundColor: .white,
                     isDisabled: false,
-                    action: userProfileViewModel.uploadProfilePhoto
+                    action: userProfileViewModel.updateProfile
                 )
                 .padding()
             }

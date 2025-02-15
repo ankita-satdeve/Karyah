@@ -29,9 +29,11 @@ struct CategorySelectionView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        .background(Color.white.cornerRadius(12)) // Ensures a white background
+//                        .background(Color.white.cornerRadius(12)) // Ensures a white background
+                        .background(Color(.systemGray6))
                 )
         }
+        
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }

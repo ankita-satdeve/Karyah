@@ -16,7 +16,7 @@ struct LargeCustomTextField: View {
         TextField(placeholder, text: $text)
             .padding()
             .frame(height: 100)
-            .background(Color(.systemBackground))
+            .background(Color(.systemGray6))
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)

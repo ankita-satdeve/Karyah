@@ -22,21 +22,22 @@ struct LocationSelectionView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-                HStack {
-                    ForEach(viewModel.locations, id: \.self) { location in
-                        CategoryButton(
-                            title: location,
-                            isSelected: viewModel.selectedLocation == location,
-                            action: { viewModel.selectLocation(location) }
-                        )
-                    }
+            HStack {
+                ForEach(viewModel.locations, id: \.self) { location in
+                    CategoryButton(
+                        title: location,
+                        isSelected: viewModel.selectedLocation == location,
+                        action: { viewModel.selectLocation(location) }
+                    )
                 }
-                .padding(15) // Add padding inside the rounded rectangle
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        .background(Color.white.cornerRadius(12)) // Ensures a white background
-                )
+            }
+            .padding(15) // Add padding inside the rounded rectangle
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+//                    .background(Color.white.cornerRadius(12)) // Ensures a white background
+                    .background(Color(.systemGray6))
+            )
             
             
         }
