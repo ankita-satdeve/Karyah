@@ -19,10 +19,17 @@ class UserProfileViewModel: ObservableObject {
     @Published var locations: [String] = ["Location 1", "Location 2", "Location 3"]
     @Published var selectedLocation: String? = nil
     @Published var selectedCategory: String? = nil
-    @Published var selectedImage: UIImage? = nil
     @Published var isShowingImagePicker = false
     @Published var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Published var profilePhoto: UIImage?
+    
+    @Published var selectedImage: UIImage? = nil {
+        didSet {
+            if let _ = selectedImage {
+                uploadProfilePhoto()
+            }
+        }
+    }
 
     
     let url: String = "\(BaseURL.url)/auth"
@@ -82,8 +89,11 @@ class UserProfileViewModel: ObservableObject {
         }
         
         let url = "https://api.karyah.in/api/auth/user"
+        
+        let token = UserDefaults.standard.string(forKey: "userToken")
+            
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // Replace with actual token
+            "Authorization": "Bearer \(token)", 
             "Content-Type": "multipart/form-data"
         ]
         

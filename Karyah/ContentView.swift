@@ -9,17 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var authManager = AuthManager()
+    @State private var navigationPath = NavigationPath() // ✅ Declare navigationPath
 
     var body: some View {
-        switch authManager.currentScreen {
-        case .splash:
-            SplashView()
-        case .otpView:
-            OTPView().environmentObject(authManager) // here .env not there
-        case .pinView:
-            PINView().environmentObject(authManager)
-        case .dashboard:
-            DashboardView().environmentObject(authManager)
+        NavigationStack(path: $navigationPath) { // ✅ Wrap entire content inside NavigationStack
+            switch authManager.currentScreen {
+            case .splash:
+                SplashView()
+            case .otpView:
+                OTPView()
+                    .environmentObject(authManager)
+            case .pinView:
+                PINView()
+                    .environmentObject(authManager)
+            case .dashboard:
+                DashboardView(navigationPath: $navigationPath) // ✅ Pass navigationPath as Binding
+                    .environmentObject(authManager)
+            }
         }
     }
 }

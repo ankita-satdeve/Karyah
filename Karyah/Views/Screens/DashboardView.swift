@@ -10,16 +10,18 @@ import SwiftUI
 struct DashboardView: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject private var dashboardViewModel = DashboardViewModel()
-
+    @Binding var navigationPath: NavigationPath // ✅ Accept navigationPath as Binding
+    
+    
     var body: some View {
-            ZStack {
+        ZStack {
                 // Background color to match system theme
                 Color(UIColor.systemBackground)
                     .edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 0) {
                     // Fixed Header
-                    HeaderView()
+                    HeaderView(navigationPath: $navigationPath) // ✅ Pass navigationPath
                         .frame(height: 10) // Adjust height as needed
                         .background(Color.red) // Match header background
                         .zIndex(1) // Ensure it stays above the ScrollView
@@ -45,7 +47,7 @@ struct DashboardView: View {
                         VStack {
                             Text("🏠 Welcome to Dashboard!")
                                 .font(.largeTitle)
-                            
+                  
                             Button("Logout") {
                                 authManager.logout()
                             }
@@ -64,8 +66,8 @@ struct DashboardView: View {
                 }
             }
 //            .navigationTitle("Dashboard")
-//            .navigationBarBackButtonHidden(true)
-            .navigationBarHidden(true) // Hide default nav bar
+        .navigationBarHidden(true) // ✅ Hide default navigation bar
+//            .navigationBarHidden(true) // Hide default nav bar
             
         
     }
@@ -74,12 +76,12 @@ struct DashboardView: View {
 
 
        
- 
-
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardView()
-            .environmentObject(AuthManager()) // Inject the AuthManager
-            .previewDevice("iPhone 14 Pro")
-    }
-}
+// 
+//
+//struct DashboardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DashboardView()
+//            .environmentObject(AuthManager()) // Inject the AuthManager
+//            .previewDevice("iPhone 14 Pro")
+//    }
+//}

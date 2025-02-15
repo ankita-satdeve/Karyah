@@ -152,7 +152,15 @@ struct ProfileView: View {
             ])
         }
         .sheet(isPresented: $userProfileViewModel.isShowingImagePicker) {
-            ImagePicker(sourceType: userProfileViewModel.sourceType, selectedImage: $userProfileViewModel.selectedImage)
+            ImagePicker(
+                sourceType: userProfileViewModel.sourceType,
+                selectedImage: Binding(
+                    get: { userProfileViewModel.selectedImage },
+                    set: { newImage in
+                        userProfileViewModel.selectedImage = newImage
+                    }
+                )
+            )
         }
     }
 }
