@@ -129,7 +129,7 @@ struct ProfileView: View {
                 SettingsOptionsView()
 
                 ReusableButton(
-                    title: "Save Changes →",
+                    title: "Save  →",
                     foregroundColor: .white,
                     isDisabled: false,
                     action: userProfileViewModel.uploadProfilePhoto
