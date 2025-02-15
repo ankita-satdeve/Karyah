@@ -20,7 +20,7 @@ struct HeaderView: View {
                             isDrawerOpen.toggle()
                         }
                     }) {
-                        Image("menu")
+                        Image(systemName: "line.3.horizontal.circle")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
@@ -39,7 +39,7 @@ struct HeaderView: View {
                     Button(action: {
                         navigationPath.append(NavigationDestination.profile) // ✅ Push to NotificationsView
                     }) {
-                        Image("notification")
+                        Image(systemName: "bell")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
