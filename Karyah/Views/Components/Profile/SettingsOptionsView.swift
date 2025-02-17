@@ -17,7 +17,9 @@ enum DrawerStep {
 
 struct SettingsOptionsView: View {
     @State private var activeDrawer: ActiveDrawer = .none  // Track which drawer is open
-
+    @StateObject private var userProfileViewModel = UserProfileViewModel()
+    @State private var showSuccessAlert = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -54,10 +56,23 @@ struct SettingsOptionsView: View {
                     }
                     .padding()
                 }
+                
+                ReusableButton(
+                                title: "Save Changes  →",
+                                foregroundColor: .white,
+                                isDisabled: false,
+                                action: {
+                                    userProfileViewModel.updateProfile {
+                                        DispatchQueue.main.async {
+                                            showSuccessAlert = true  // ✅ Trigger success alert
+                                        }
+                                    }
+                                }
+                            )
+//                .padding(.top, 100)
 
                 Spacer()
             }
-            .padding()
 
             // Floating Drawer
             if activeDrawer != .none {
@@ -65,7 +80,10 @@ struct SettingsOptionsView: View {
                     .transition(.move(edge: .bottom))
                     .zIndex(1)
             }
+            
+            
         }
+        .padding(.horizontal, 10)
         .edgesIgnoringSafeArea(.bottom)
     }
 }
