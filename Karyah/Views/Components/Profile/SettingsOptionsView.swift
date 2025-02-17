@@ -7,32 +7,61 @@
 
 import SwiftUI
 
+enum ActiveDrawer {
+    case changePin, biometric, none
+}
+
+enum DrawerStep {
+    case initial, enterOTP
+}
+
 struct SettingsOptionsView: View {
-    @State private var showChangePin = false  // Toggle for Change PIN Drawer
+    @State private var activeDrawer: ActiveDrawer = .none  // Track which drawer is open
 
     var body: some View {
         ZStack {
             VStack {
                 Button(action: {
                     withAnimation {
-                        showChangePin.toggle()  // Open Change PIN Drawer
+                        activeDrawer = .changePin  // Open Change PIN Drawer
                     }
                 }) {
-                    SettingsRow(title: "Change PIN", icon: "chevron.right")
-                        .foregroundColor(.primary)
+                    HStack {
+                        Text("Change PIN")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.primary)
+                    }
+                    .padding()
                 }
 
                 Divider()
 
-                SettingsRow(title: "Biometric", icon: "chevron.right")
+                Button(action: {
+                    withAnimation {
+                        activeDrawer = .biometric  // Open Biometric Drawer
+                    }
+                }) {
+                    HStack {
+                        Text("Biometric")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.primary)
+                    }
+                    .padding()
+                }
 
                 Spacer()
             }
             .padding()
 
-            // Floating Drawer for Change PIN
-            if showChangePin {
-                ChangePinDrawer(isVisible: $showChangePin)
+            // Floating Drawer
+            if activeDrawer != .none {
+                SettingsDrawer(isVisible: $activeDrawer)
                     .transition(.move(edge: .bottom))
                     .zIndex(1)
             }
