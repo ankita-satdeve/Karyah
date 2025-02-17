@@ -10,13 +10,17 @@ import SwiftUI
 struct SettingsRow: View {
     let title: String
     let icon: String
-    
+
     var body: some View {
         HStack {
             Text(title)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.headline)
+            Spacer()
             Image(systemName: icon)
+                .foregroundColor(.primary)
         }
-        .padding()
+        .padding(.vertical, 10)
+//        .background(Color(.secondarySystemBackground))
+        .cornerRadius(10)
     }
 }

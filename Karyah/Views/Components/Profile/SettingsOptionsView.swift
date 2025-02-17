@@ -11,29 +11,32 @@ struct SettingsOptionsView: View {
     @State private var showChangePin = false  // Toggle for Change PIN Drawer
 
     var body: some View {
-        VStack {
-            Button(action: {
-                withAnimation {
-                    showChangePin.toggle()  // Open Change PIN Drawer
+        ZStack {
+            VStack {
+                Button(action: {
+                    withAnimation {
+                        showChangePin.toggle()  // Open Change PIN Drawer
+                    }
+                }) {
+                    SettingsRow(title: "Change PIN", icon: "chevron.right")
+                        .foregroundColor(.primary)
                 }
-            }) {
-                SettingsRow(title: "Change PIN", icon: "chevron.right")
+
+                Divider()
+
+                SettingsRow(title: "Biometric", icon: "chevron.right")
+
+                Spacer()
             }
+            .padding()
 
-            Divider()
-
-            SettingsRow(title: "Biometric", icon: "chevron.right")
-
+            // Floating Drawer for Change PIN
+            if showChangePin {
+                ChangePinDrawer(isVisible: $showChangePin)
+                    .transition(.move(edge: .bottom))
+                    .zIndex(1)
+            }
         }
-//        .padding(.horizontal)
-        .overlay(
-            Group {
-                if showChangePin {
-                    ChangePinView(isVisible: $showChangePin)
-                        .transition(.move(edge: .bottom))
-                        .zIndex(1)
-                }
-            }
-        )
+        .edgesIgnoringSafeArea(.bottom)
     }
 }

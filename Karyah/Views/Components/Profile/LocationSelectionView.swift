@@ -15,7 +15,7 @@ struct LocationSelectionView: View {
             Text("Preferred Location").font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
-                Image(systemName: "location.fill")
+                Image("location")
                 Text("Choose from location")
                     .font(.body)
                     .fontWeight(.semibold)
