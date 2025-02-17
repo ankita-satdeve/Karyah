@@ -15,8 +15,9 @@ struct ChangePinView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
+                Image("changePin")
                 Text("Change PIN")
-                    .font(.headline)
+                    .font(.title2)
                     .fontWeight(.bold)
                 
                 Spacer()
@@ -32,17 +33,28 @@ struct ChangePinView: View {
                         .foregroundColor(.gray)
                 }
             }
+            
+            Divider()
 
             Text("Are you sure you want to change PIN?")
-                .font(.subheadline)
-                .foregroundColor(.gray)
+                .font(.headline)
+                .foregroundColor(.primary)
+            
+            CustomTextField(
+                placeholder: "Enter Existing PIN",
+                text: $existingPin)
 
-            SecureField("Enter Existing PIN", text: $existingPin)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            Text("Forgot PIN?")
+                .font(.headline)
+                .foregroundColor(.blue)
+                .frame(maxWidth: .infinity, alignment: .trailing)
 
-            SecureField("Enter New PIN", text: $newPin)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-
+            CustomTextField(
+                placeholder: "Enter New PIN",
+                text: $newPin)
+            
+            
             HStack {
                 Button("No, cancel") {
                     withAnimation {
@@ -51,23 +63,34 @@ struct ChangePinView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.red.opacity(0.2))
+                .background(Color(hex: "#FFF2F2"))
                 .foregroundColor(.red)
-                .cornerRadius(8)
-
+                .cornerRadius(14)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color(hex: "#FFE5E5"), lineWidth: 2)
+                )
+                
                 Button("Yes, Change") {
                     // Change PIN logic here
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
+                .background(Color(hex: "#ECEFFF"))
+                .foregroundColor(.primary)
+                .cornerRadius(14)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color(hex: "#DEE3FF"), lineWidth: 2)
+                )
+                
             }
+            .padding(.top, 30)
         }
+       
         .padding()
         .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(radius: 4)
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+//        .shadow(radius: 4)
     }
 }

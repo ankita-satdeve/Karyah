@@ -163,6 +163,7 @@ struct ProfileView: View {
                                     }
                                 }
                             )
+                .padding(.top, 100)
                 .padding()
             }
             .alert(isPresented: $showSuccessAlert) {
