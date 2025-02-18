@@ -117,9 +117,17 @@ struct ProfileView: View {
                     
                     
                     
-                    CustomTextField(
+//                    CustomTextField(
+//                        placeholder: "YYYY-MM-DD",
+//                        text: Binding(
+//                            get: { userProfileViewModel.user?.dob ?? "" },
+//                            set: { userProfileViewModel.user?.dob = $0 }
+//                        )
+//                    )
+                    
+                    DatePickerTextField(
                         placeholder: "YYYY-MM-DD",
-                        text: Binding(
+                        dateString: Binding(
                             get: { userProfileViewModel.user?.dob ?? "" },
                             set: { userProfileViewModel.user?.dob = $0 }
                         )
