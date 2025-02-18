@@ -141,14 +141,6 @@ struct ProfileView: View {
                         )
                     )
                     
-//                    CustomTextField(
-//                        placeholder: "DD/MM/YYYY",
-//                        text: $userProfileViewModel.dateOfBirth
-//                    )
-//                    
-//                    CustomTextField(placeholder: "Address",
-//                                    text: $userProfileViewModel.address)
-                    
                 }
                 .padding()
                 

@@ -128,17 +128,24 @@ class UserProfileViewModel: ObservableObject {
         //        }
         
         //        uploadProfilePhoto()
+
         
-        // Append bio if available
-        if let bio = self.user?.bio, let bioData = bio.data(using: .utf8) {
-            multipartFormData.append(bioData, withName: "bio")
+        let profileFields: [String: String?] = [
+            "bio": self.user?.bio,
+            "email": self.user?.email,
+            "name": self.user?.name,
+            "phone": self.user?.phone,
+            "location": self.user?.location,
+            "dob": self.user?.dob
+        ]
+
+        for (key, value) in profileFields {
+            if let data = value?.data(using: .utf8) {
+                multipartFormData.append(data, withName: key)
+            }
         }
-        //        if let email = self.user?.email, let emailData = email.data(using: .utf8) {
-        //            multipartFormData.append(emailData, withName: "email")
-        //        }
-        //        if let name = self.user?.name, let nameData = name.data(using: .utf8) {
-        //            multipartFormData.append(nameData, withName: "name")
-        //        }
+
+
         
         AF.upload(multipartFormData: multipartFormData, to: apiUrl, method: .put, headers: headers)
             .validate()
