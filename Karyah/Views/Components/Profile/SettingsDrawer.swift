@@ -13,6 +13,7 @@ struct SettingsDrawer: View {
     @State private var phoneEmail = ""
     @State private var otp = ""
     @State private var isOn: Bool = true  //false
+    @StateObject private var changePinViewModel = ChangePinViewModel()
     
     var body: some View {
         VStack {
@@ -21,7 +22,7 @@ struct SettingsDrawer: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Image(isVisible == .changePin ? "changePin" : "changePin")
-                    Text(drawerStep == .initial ? (isVisible == .changePin ? "Change PIN" : "Set Biometric") : "Change PIN")
+                    Text(drawerStep == .initial ? (isVisible == .changePin ? "Change PIN" : "Set Biometric") : "Forgot PIN")
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
@@ -52,15 +53,21 @@ struct SettingsDrawer: View {
                         .padding()
                     
                     if isVisible == .changePin {
-                        CustomTextField(placeholder: "Enter Existing PIN", text: .constant(""))
+                        CustomTextField(placeholder: "Enter Existing PIN", text: $changePinViewModel.currentPin)
                         
-                        Text("Forgot PIN?")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.bottom, 10)
-                        
-                        CustomTextField(placeholder: "Enter New PIN", text: .constant(""))
+                        Button(action: {
+                            withAnimation {
+                                drawerStep = .enterOTP
+                            }
+                        }) {
+                            Text("Forgot PIN?")
+                                .font(.headline)
+                                .foregroundColor(.blue)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .padding(.bottom, 10)
+                        }
+
+                        CustomTextField(placeholder: "Enter New PIN", text: $changePinViewModel.newPin)
                             .padding(.bottom, 30)
                         
                         HStack {
@@ -80,9 +87,11 @@ struct SettingsDrawer: View {
                                     .stroke(Color(hex: "#FFE5E5"), lineWidth: 2)
                             )
                             
-                            Button("Yes, Change") {
+                            
+                            Button(changePinViewModel.isLoading ? "Processing..." : "Change PIN") {
                                 withAnimation {
-                                    drawerStep = .enterOTP  // Switch to OTP step
+                                    changePinViewModel.changePin()
+//                                    drawerStep = .enterOTP  // Switch to OTP step   ---forgot pin
                                 }
                             }
                             .frame(maxWidth: .infinity)
@@ -94,6 +103,14 @@ struct SettingsDrawer: View {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color(hex: "#DEE3FF"), lineWidth: 2)
                             )
+                            .disabled(changePinViewModel.isLoading)
+                            
+                            if !changePinViewModel.message.isEmpty {
+                                Text(changePinViewModel.message)
+                                    .foregroundColor(.green)
+                                    .padding()
+                                    .accessibilityLabel(changePinViewModel.message)
+                            }
                         }
                     }
                     
@@ -110,14 +127,14 @@ struct SettingsDrawer: View {
                                     .frame(width: 40, height: 40)
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                        Text("Biometric Access")
-                                            .fontWeight(.bold)
-                                            .frame(maxWidth: .infinity, alignment: .leading) // Forces text to align left
-                                        
-                                        Text("Give System Biometric Permission to KARYAH:")
-                                            .font(.caption)
-                                            .fixedSize(horizontal: true, vertical: false)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("Biometric Access")
+                                        .fontWeight(.bold)
+                                        .frame(maxWidth: .infinity, alignment: .leading) // Forces text to align left
+                                    
+                                    Text("Give System Biometric Permission to KARYAH:")
+                                        .font(.caption)
+                                        .fixedSize(horizontal: true, vertical: false)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 
                                 //                                VStack {
@@ -152,7 +169,7 @@ struct SettingsDrawer: View {
                                 )
                             }
                         }
-                        }
+                    }
                     
                     
                     

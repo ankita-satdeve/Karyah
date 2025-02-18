@@ -15,7 +15,15 @@ class ChangePinViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
     func changePin() {
-        guard let token = UserDefaults.standard.string(forKey: "authToken") else { return }
+//        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+//            print("Token not found")
+//            return
+//        }
+//
+//        let headers: HTTPHeaders = [
+//            "Authorization": "Bearer \(token)"
+//        ]
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else { return }
         let url = "https://api.karyah.in/api/auth/change-pin"
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",

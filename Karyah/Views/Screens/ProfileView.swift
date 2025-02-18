@@ -151,19 +151,19 @@ struct ProfileView: View {
                 
                 SettingsOptionsView()
                 
-//                ReusableButton(
-//                                title: "Save Changes  →",
-//                                foregroundColor: .white,
-//                                isDisabled: false,
-//                                action: {
-//                                    userProfileViewModel.updateProfile {
-//                                        DispatchQueue.main.async {
-//                                            showSuccessAlert = true  // ✅ Trigger success alert
-//                                        }
-//                                    }
-//                                }
-//                            )
-//                .padding()
+                ReusableButton(
+                                title: "Save Changes  →",
+                                foregroundColor: .white,
+                                isDisabled: false,
+                                action: {
+                                    userProfileViewModel.updateProfile {
+                                        DispatchQueue.main.async {
+                                            showSuccessAlert = true  // ✅ Trigger success alert
+                                        }
+                                    }
+                                }
+                            )
+                .padding()
             }
             .alert(isPresented: $showSuccessAlert) {
                 Alert(
@@ -186,6 +186,7 @@ struct ProfileView: View {
             }
             .sheet(isPresented: $userProfileViewModel.isShowingImagePicker, onDismiss: {
                 userProfileViewModel.uploadProfilePhoto() // Upload the image after selection
+                    //give here or a font visible that image is upload
             }) {
                 ImagePicker(
                     sourceType: userProfileViewModel.sourceType,

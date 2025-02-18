@@ -57,18 +57,18 @@ struct SettingsOptionsView: View {
                     .padding()
                 }
                 
-                ReusableButton(
-                                title: "Save Changes  →",
-                                foregroundColor: .white,
-                                isDisabled: false,
-                                action: {
-                                    userProfileViewModel.updateProfile {
-                                        DispatchQueue.main.async {
-                                            showSuccessAlert = true  // ✅ Trigger success alert
-                                        }
-                                    }
-                                }
-                            )
+//                ReusableButton(
+//                                title: "Save Changes  →",
+//                                foregroundColor: .white,
+//                                isDisabled: false,
+//                                action: {
+//                                    userProfileViewModel.updateProfile {
+//                                        DispatchQueue.main.async {
+//                                            showSuccessAlert = true  // ✅ Trigger success alert
+//                                        }
+//                                    }
+//                                }
+//                            )
 //                .padding(.top, 100)
 
                 Spacer()

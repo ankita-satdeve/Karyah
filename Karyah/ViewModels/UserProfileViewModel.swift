@@ -95,7 +95,7 @@ class UserProfileViewModel: ObservableObject {
                 case .success(let userResponse):
                     DispatchQueue.main.async {
                         self.user = userResponse.user
-                        self.selectedImage = nil  // Reset selected image after upload
+                        self.selectedImage = nil
                     }
                     print("Upload Success: \(userResponse)")
                 case .failure(let error):
@@ -103,6 +103,42 @@ class UserProfileViewModel: ObservableObject {
                 }
             }
         }
+    
+    //if show errors-
+//    func uploadProfilePhoto() {
+//            guard let image = selectedImage, let token = UserDefaults.standard.string(forKey: "userToken") else {
+//                print("❌ No image selected or missing token")
+//                return
+//            }
+//            
+//            let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
+//            let apiUrl = "\(url)/user"
+//            
+//            AF.upload(multipartFormData: { formData in
+//                if let imageData = image.jpegData(compressionQuality: 0.8) {
+//                    formData.append(imageData, withName: "profilePhoto", fileName: "profile.jpg", mimeType: "image/jpeg")
+//                }
+//            }, to: apiUrl, method: .put, headers: headers)
+//            .validate()  // ✅ Catch errors before decoding
+//            .uploadProgress { progress in
+//                print("Upload Progress: \(progress.fractionCompleted)")
+//            }
+//            .responseDecodable(of: UserProfileResponse.self) { response in
+//                switch response.result {
+//                case .success(let userResponse):
+//                    DispatchQueue.main.async {
+//                        self.user = userResponse.user
+//                        self.selectedImage = nil  // ✅ Reset selected image
+//                    }
+//                    print("✅ Upload Success: \(userResponse)")
+//                case .failure(let error):
+//                    print("❌ Upload Failed: \(error.localizedDescription)")
+//                    if let data = response.data {
+//                        print("Server Response: \(String(data: data, encoding: .utf8) ?? "Invalid Response")")
+//                    }
+//                }
+//            }
+//        }
     
     func updateProfile(completion: @escaping () -> Void) {
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
@@ -119,14 +155,22 @@ class UserProfileViewModel: ObservableObject {
         let multipartFormData = MultipartFormData()
 
         // Append profile photo if available
-        if let image = self.profileImage, let imageData = image.jpegData(compressionQuality: 0.8) {
-            multipartFormData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
-        }
+//        if let image = self.profileImage, let imageData = image.jpegData(compressionQuality: 0.8) {
+//            multipartFormData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
+//        }
 
+//        uploadProfilePhoto()
+        
         // Append bio if available
         if let bio = self.user?.bio, let bioData = bio.data(using: .utf8) {
             multipartFormData.append(bioData, withName: "bio")
         }
+//        if let email = self.user?.email, let emailData = email.data(using: .utf8) {
+//            multipartFormData.append(emailData, withName: "email")
+//        }
+//        if let name = self.user?.name, let nameData = name.data(using: .utf8) {
+//            multipartFormData.append(nameData, withName: "name")
+//        }
 
         AF.upload(multipartFormData: multipartFormData, to: apiUrl, method: .put, headers: headers)
             .validate()

@@ -12,6 +12,10 @@ struct UserProfileResponse: Codable {
     var user: UserProfileModel
 }
 
+struct ChangePinResponse: Decodable {
+    let message: String
+}
+
 struct UserProfileModel: Codable {
     var userId: Int
     var email: String?
