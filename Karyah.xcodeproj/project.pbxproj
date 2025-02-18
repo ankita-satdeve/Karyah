@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CC1C8DB22D5DD0F2001DB95C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CC1C8DB12D5DD0F2001DB95C /* Alamofire */; };
+		CCABAD322D6469F5006DC3A9 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = CCABAD312D6469F5006DC3A9 /* CropViewController */; };
+		CCABAD342D6469F5006DC3A9 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = CCABAD332D6469F5006DC3A9 /* TOCropViewController */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC1C8DB22D5DD0F2001DB95C /* Alamofire in Frameworks */,
+				CCABAD342D6469F5006DC3A9 /* TOCropViewController in Frameworks */,
+				CCABAD322D6469F5006DC3A9 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +142,8 @@
 			name = Karyah;
 			packageProductDependencies = (
 				CC1C8DB12D5DD0F2001DB95C /* Alamofire */,
+				CCABAD312D6469F5006DC3A9 /* CropViewController */,
+				CCABAD332D6469F5006DC3A9 /* TOCropViewController */,
 			);
 			productName = Karyah;
 			productReference = CC1C8CF82D5DBB68001DB95C /* Karyah.app */;
@@ -217,6 +223,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CC1C8DB02D5DD0F2001DB95C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				CCABAD302D6469F5006DC3A9 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CC1C8CF92D5DBB68001DB95C /* Products */;
@@ -587,6 +594,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		CCABAD302D6469F5006DC3A9 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -594,6 +609,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CC1C8DB02D5DD0F2001DB95C /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		CCABAD312D6469F5006DC3A9 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCABAD302D6469F5006DC3A9 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		CCABAD332D6469F5006DC3A9 /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCABAD302D6469F5006DC3A9 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

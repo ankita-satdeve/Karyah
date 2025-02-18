@@ -13,6 +13,8 @@ struct ProfileView: View {
     @State private var showImagePicker = false
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var showSuccessAlert = false
+    @State private var selectedImage: UIImage?
+    @State private var isShowingImagePicker = false
     
     var body: some View {
         ScrollView {
@@ -21,7 +23,49 @@ struct ProfileView: View {
                 
                 // Profile Image
                 ZStack {
-                    if let selectedImage = userProfileViewModel.selectedImage {
+//                    if let selectedImage = userProfileViewModel.selectedImage {
+//                        Image(uiImage: selectedImage)
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 120, height: 120)
+//                            .clipShape(Circle())
+//                    } else if let imageUrlString = userProfileViewModel.user?.profilePhoto,
+//                              let imageUrl = URL(string: imageUrlString) {
+//                        AsyncImage(url: imageUrl) { phase in
+//                            switch phase {
+//                            case .empty:
+//                                ProgressView()
+//                            case .success(let image):
+//                                image
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 120, height: 120)
+//                                    .clipShape(Circle())
+//                            case .failure:
+//                                Image(systemName: "person.circle.fill")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 120, height: 120)
+//                                    .foregroundColor(.gray)
+//                            @unknown default:
+//                                EmptyView()
+//                            }
+//                        }
+//                    } else {
+//                        Image(systemName: "person.circle.fill")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 120, height: 120)
+//                            .foregroundColor(.gray)
+//                    }
+                    
+                    if let tempImage = userProfileViewModel.tempProfilePhoto {
+                        Image(uiImage: tempImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                            .clipShape(Circle())
+                    } else if let selectedImage = userProfileViewModel.selectedImage {
                         Image(uiImage: selectedImage)
                             .resizable()
                             .scaledToFit()
@@ -61,6 +105,7 @@ struct ProfileView: View {
                     Button(action: {
                         showActionSheet = true
                         userProfileViewModel.isShowingSourceSelection = true
+                        isShowingImagePicker = true
                     }) {
                         Image(systemName: "camera.fill")
                             .resizable()
@@ -176,24 +221,6 @@ struct ProfileView: View {
             .onAppear {
                 userProfileViewModel.fetchUserProfile()
             }
-//            .actionSheet(isPresented: $showActionSheet) {
-//                ActionSheet(title: Text("Select Image"), buttons: [
-//                    .default(Text("Choose from Library")) {
-//                        userProfileViewModel.sourceType = .photoLibrary
-//                        userProfileViewModel.isShowingImagePicker = true
-//                    },
-//                    .cancel()
-//                ])
-//            }
-//            .sheet(isPresented: $userProfileViewModel.isShowingImagePicker, onDismiss: {
-//                userProfileViewModel.uploadProfilePhoto() // Upload the image after selection
-//                    //give here or a font visible that image is upload
-//            }) {
-//                ImagePicker(
-//                    sourceType: userProfileViewModel.sourceType,
-            //                    selectedImage: $userProfileViewModel.selectedImage
-            //                )
-            //            }
             
             .actionSheet(isPresented: $userProfileViewModel.isShowingSourceSelection) {
                 ActionSheet(title: Text("Choose a source"), buttons: [
@@ -201,7 +228,7 @@ struct ProfileView: View {
                         userProfileViewModel.sourceType = .camera
                         userProfileViewModel.isShowingImagePicker = true
                     },
-                    .default(Text("Search from Gallery")) {
+                    .default(Text("Choose from Gallery")) {
                         userProfileViewModel.sourceType = .photoLibrary
                         userProfileViewModel.isShowingImagePicker = true
                     },
@@ -211,9 +238,15 @@ struct ProfileView: View {
             .sheet(isPresented: $userProfileViewModel.isShowingImagePicker, onDismiss: {
                 userProfileViewModel.uploadProfilePhoto()
             }) {
-                ImagePicker(sourceType: userProfileViewModel.sourceType, selectedImage: $userProfileViewModel.selectedImage)
+                ImagePickerWithCrop(sourceType: userProfileViewModel.sourceType, selectedImage: $userProfileViewModel.selectedImage)
             }
-            
+            .alert(isPresented: $userProfileViewModel.isUploadSuccess) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("Profile photo uploaded successfully!"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
             
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 20) // Ensures everything stays within screen bounds

@@ -7,77 +7,61 @@
 
 import SwiftUI
 import UIKit
+import TOCropViewController
 
-struct ImagePicker: UIViewControllerRepresentable {
+struct ImagePickerWithCrop: UIViewControllerRepresentable {
     @Environment(\.presentationMode) private var presentationMode
     var sourceType: UIImagePickerController.SourceType
     @Binding var selectedImage: UIImage?
-
+    @StateObject private var userProfileViewModel = UserProfileViewModel()
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = sourceType
         picker.delegate = context.coordinator
         return picker
     }
-
+    
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
-    }
-
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        let parent: ImagePicker
-
-        init(_ parent: ImagePicker) {
+    
+    
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, TOCropViewControllerDelegate {
+        let parent: ImagePickerWithCrop
+        
+        init(_ parent: ImagePickerWithCrop) {
             self.parent = parent
         }
-
+        
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage {
-                parent.selectedImage = image
+                let cropViewController = TOCropViewController(image: image)
+                cropViewController.delegate = self
+                picker.present(cropViewController, animated: true)
             }
+        }
+        
+//        func cropViewController(_ cropViewController: TOCropViewController, didCropTo image: UIImage, with cropRect: CGRect, angle: Int) {
+//            parent.selectedImage = image
+//            cropViewController.dismiss(animated: true) {
+//                self.parent.presentationMode.wrappedValue.dismiss()
+//            }
+//        }
+        
+        func cropViewController(_ cropViewController: TOCropViewController, didCropTo image: UIImage, with cropRect: CGRect, angle: Int) {
+            parent.selectedImage = image
+            parent.userProfileViewModel.tempProfilePhoto = image  // Keep temporary image
+            cropViewController.dismiss(animated: true) {
+                self.parent.presentationMode.wrappedValue.dismiss()
+            }
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             parent.presentationMode.wrappedValue.dismiss()
         }
     }
+    
 }
-
-//import SwiftUI
-//
-//struct ImagePicker: UIViewControllerRepresentable {
-//    @Binding var image: UIImage?
-//    var sourceType: UIImagePickerController.SourceType
-//    
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//    
-//    func makeUIViewController(context: Context) -> UIImagePickerController {
-//        let picker = UIImagePickerController()
-//        picker.delegate = context.coordinator
-//        picker.sourceType = sourceType
-//        return picker
-//    }
-//    
-//    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-//    
-//    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-//        let parent: ImagePicker
-//        
-//        init(_ parent: ImagePicker) {
-//            self.parent = parent
-//        }
-//        
-//        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//            if let selectedImage = info[.originalImage] as? UIImage {
-//                parent.image = selectedImage
-//            }
-//            picker.dismiss(animated: true)
-//        }
-//        
-//        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//            picker.dismiss(animated: true)
-//        }
-//    }
-//}
-//
