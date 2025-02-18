@@ -76,35 +76,7 @@ class UserProfileViewModel: ObservableObject {
                 }
             }
     }
-    
-    
-//    func uploadProfilePhoto() {
-//        guard let image = selectedImage, let token = UserDefaults.standard.string(forKey: "userToken") else { return }
-//        
-//        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
-//        let apiUrl = "\(url)/user"
-//        
-//        AF.upload(multipartFormData: { formData in
-//            if let imageData = image.jpegData(compressionQuality: 0.8) {
-//                formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
-//            }
-//        }, to: apiUrl, method: .put, headers: headers)
-//        .uploadProgress { progress in
-//            print("Upload Progress: \(progress.fractionCompleted)")
-//        }
-//        .responseDecodable(of: UserProfileResponse.self) { response in
-//            switch response.result {
-//            case .success(let userResponse):
-//                DispatchQueue.main.async {
-//                    self.selectedImage = nil
-//                }
-//                print("Upload Success: \(userResponse)")
-//            case .failure(let error):
-//                print("Upload Failed: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-    
+
     func uploadProfilePhoto() {
         guard let image = selectedImage, let token = UserDefaults.standard.string(forKey: "userToken") else { return }
         
@@ -125,7 +97,7 @@ class UserProfileViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.user = userResponse.user
                     self.selectedImage = nil
-                    self.tempProfilePhoto = nil // Clear temporary image after upload
+                    self.tempProfilePhoto = nil
                     self.isUploadSuccess = true
                 }
                 print("Upload Success: \(userResponse)")

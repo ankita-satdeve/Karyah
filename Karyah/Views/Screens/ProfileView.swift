@@ -20,45 +20,8 @@ struct ProfileView: View {
         ScrollView {
             VStack(spacing: 20) {
                 
-                
                 // Profile Image
                 ZStack {
-//                    if let selectedImage = userProfileViewModel.selectedImage {
-//                        Image(uiImage: selectedImage)
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 120, height: 120)
-//                            .clipShape(Circle())
-//                    } else if let imageUrlString = userProfileViewModel.user?.profilePhoto,
-//                              let imageUrl = URL(string: imageUrlString) {
-//                        AsyncImage(url: imageUrl) { phase in
-//                            switch phase {
-//                            case .empty:
-//                                ProgressView()
-//                            case .success(let image):
-//                                image
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width: 120, height: 120)
-//                                    .clipShape(Circle())
-//                            case .failure:
-//                                Image(systemName: "person.circle.fill")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width: 120, height: 120)
-//                                    .foregroundColor(.gray)
-//                            @unknown default:
-//                                EmptyView()
-//                            }
-//                        }
-//                    } else {
-//                        Image(systemName: "person.circle.fill")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 120, height: 120)
-//                            .foregroundColor(.gray)
-//                    }
-                    
                     if let tempImage = userProfileViewModel.tempProfilePhoto {
                         Image(uiImage: tempImage)
                             .resizable()
@@ -152,13 +115,31 @@ struct ProfileView: View {
                         )
                     )
                     
+                    
+                    
                     CustomTextField(
-                        placeholder: "DD/MM/YYYY",
-                        text: $userProfileViewModel.dateOfBirth
+                        placeholder: "YYYY-MM-DD",
+                        text: Binding(
+                            get: { userProfileViewModel.user?.dob ?? "" },
+                            set: { userProfileViewModel.user?.dob = $0 }
+                        )
                     )
                     
-                    CustomTextField(placeholder: "Address",
-                                    text: $userProfileViewModel.address)
+                    CustomTextField(
+                        placeholder: "Address",
+                        text: Binding(
+                            get: { userProfileViewModel.user?.location ?? "" },
+                            set: { userProfileViewModel.user?.location = $0 }
+                        )
+                    )
+                    
+//                    CustomTextField(
+//                        placeholder: "DD/MM/YYYY",
+//                        text: $userProfileViewModel.dateOfBirth
+//                    )
+//                    
+//                    CustomTextField(placeholder: "Address",
+//                                    text: $userProfileViewModel.address)
                     
                 }
                 .padding()

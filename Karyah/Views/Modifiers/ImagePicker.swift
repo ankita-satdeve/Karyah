@@ -43,13 +43,7 @@ struct ImagePickerWithCrop: UIViewControllerRepresentable {
                 picker.present(cropViewController, animated: true)
             }
         }
-        
-//        func cropViewController(_ cropViewController: TOCropViewController, didCropTo image: UIImage, with cropRect: CGRect, angle: Int) {
-//            parent.selectedImage = image
-//            cropViewController.dismiss(animated: true) {
-//                self.parent.presentationMode.wrappedValue.dismiss()
-//            }
-//        }
+
         
         func cropViewController(_ cropViewController: TOCropViewController, didCropTo image: UIImage, with cropRect: CGRect, angle: Int) {
             parent.selectedImage = image
