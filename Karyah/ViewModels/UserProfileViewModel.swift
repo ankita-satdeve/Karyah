@@ -24,6 +24,10 @@ class UserProfileViewModel: ObservableObject {
     @Published var profilePhoto: UIImage?
     @Published var selectedImage: UIImage?
     @Published var profileImage: UIImage?
+//    @Published var selectedImage: UIImage?
+//    @Published var isShowingImagePicker = false
+    @Published var isShowingSourceSelection = false
+//    @Published var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
     let url: String = "\(BaseURL.url)/auth"
     
@@ -76,14 +80,13 @@ class UserProfileViewModel: ObservableObject {
     
     
     func uploadProfilePhoto() {
-        guard let image = selectedImage, let token = UserDefaults.standard.string(forKey: "userToken") else { return }
-        
-        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
-        
-        let apiUrl = "\(url)/user"
-        
-        AF.upload(multipartFormData: { formData in
-            if let imageData = image.jpegData(compressionQuality: 0.8) {
+            guard let image = selectedImage, let token = UserDefaults.standard.string(forKey: "userToken") else { return }
+            
+            let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
+            let apiUrl = "\(url)/user"
+            
+            AF.upload(multipartFormData: { formData in
+                if let imageData = image.jpegData(compressionQuality: 0.8) {
                     formData.append(imageData, withName: "profilePhoto", fileName: "image.jpg", mimeType: "image/jpeg")
                 }
             }, to: apiUrl, method: .put, headers: headers)
@@ -94,7 +97,6 @@ class UserProfileViewModel: ObservableObject {
                 switch response.result {
                 case .success(let userResponse):
                     DispatchQueue.main.async {
-                        self.user = userResponse.user
                         self.selectedImage = nil
                     }
                     print("Upload Success: \(userResponse)")

@@ -60,6 +60,7 @@ struct ProfileView: View {
                     // Camera Button
                     Button(action: {
                         showActionSheet = true
+                        userProfileViewModel.isShowingSourceSelection = true
                     }) {
                         Image(systemName: "camera.fill")
                             .resizable()
@@ -175,9 +176,32 @@ struct ProfileView: View {
             .onAppear {
                 userProfileViewModel.fetchUserProfile()
             }
-            .actionSheet(isPresented: $showActionSheet) {
-                ActionSheet(title: Text("Select Image"), buttons: [
-                    .default(Text("Choose from Library")) {
+//            .actionSheet(isPresented: $showActionSheet) {
+//                ActionSheet(title: Text("Select Image"), buttons: [
+//                    .default(Text("Choose from Library")) {
+//                        userProfileViewModel.sourceType = .photoLibrary
+//                        userProfileViewModel.isShowingImagePicker = true
+//                    },
+//                    .cancel()
+//                ])
+//            }
+//            .sheet(isPresented: $userProfileViewModel.isShowingImagePicker, onDismiss: {
+//                userProfileViewModel.uploadProfilePhoto() // Upload the image after selection
+//                    //give here or a font visible that image is upload
+//            }) {
+//                ImagePicker(
+//                    sourceType: userProfileViewModel.sourceType,
+            //                    selectedImage: $userProfileViewModel.selectedImage
+            //                )
+            //            }
+            
+            .actionSheet(isPresented: $userProfileViewModel.isShowingSourceSelection) {
+                ActionSheet(title: Text("Choose a source"), buttons: [
+                    .default(Text("Open Camera")) {
+                        userProfileViewModel.sourceType = .camera
+                        userProfileViewModel.isShowingImagePicker = true
+                    },
+                    .default(Text("Search from Gallery")) {
                         userProfileViewModel.sourceType = .photoLibrary
                         userProfileViewModel.isShowingImagePicker = true
                     },
@@ -185,14 +209,12 @@ struct ProfileView: View {
                 ])
             }
             .sheet(isPresented: $userProfileViewModel.isShowingImagePicker, onDismiss: {
-                userProfileViewModel.uploadProfilePhoto() // Upload the image after selection
-                    //give here or a font visible that image is upload
+                userProfileViewModel.uploadProfilePhoto()
             }) {
-                ImagePicker(
-                    sourceType: userProfileViewModel.sourceType,
-                    selectedImage: $userProfileViewModel.selectedImage
-                )
+                ImagePicker(sourceType: userProfileViewModel.sourceType, selectedImage: $userProfileViewModel.selectedImage)
             }
+            
+            
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 20) // Ensures everything stays within screen bounds
         }
