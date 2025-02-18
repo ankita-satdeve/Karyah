@@ -22,22 +22,19 @@ struct ProjectListView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 16) {
+                // Create Project Button
                 
-                Button(action: {
-                    navigateToCreateProject = true
-                }) {
-                    Image(systemName: "plus")
-                        .foregroundColor(.red)
-                        .padding(.leading, 300)
-                }
-                .navigationDestination(isPresented: $navigateToCreateProject) {
-                    CreateProjectView()
-                }
                 
                 // Header Card
-                HeaderCard()
+                HeaderCard(
+                    title: "All Projects",
+                    description: "The list of projects you have taken so far",
+                    buttonText: "Create",
+                    buttonAction: true // This controls whether the button is shown or not
+                )
+
                 
                 // Search Bar
                 HStack {
@@ -63,12 +60,12 @@ struct ProjectListView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 } else {
-                    ScrollView(.vertical, showsIndicators: false) { // Enable scrollbar
+                    ScrollView(.vertical, showsIndicators: false) {
                         ScrollViewReader { proxy in
                             LazyVStack(spacing: 12) {
                                 ForEach(filteredProjects) { project in
                                     ProjectCard(project: project)
-                                        .id(project.id) // Ensure each project has an ID for scrolling
+                                        .id(project.id)
                                 }
                             }
                             .padding(.horizontal)

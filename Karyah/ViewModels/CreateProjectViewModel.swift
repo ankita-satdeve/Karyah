@@ -28,6 +28,11 @@ class CreateProjectViewModel: ObservableObject {
             print("Invalid URL")
             return
         }
+        
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            print("Token not found")
+            return
+        }
 
         // Convert dates to ISO 8601 format
         let isoFormatter = ISO8601DateFormatter()
@@ -54,7 +59,7 @@ class CreateProjectViewModel: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         do {
             request.httpBody = try JSONEncoder().encode(projectData)

@@ -142,7 +142,7 @@ struct PINView: View {
             }
             .ignoresSafeArea()
             .fullScreenCover(isPresented: $pinViewModel.navigateToDashboard) {
-                ProfileView() //DashboardView()
+                ProjectListView() //DashboardView()
             }
         }
     }

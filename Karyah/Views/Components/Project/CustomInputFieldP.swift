@@ -15,15 +15,16 @@ struct CustomInputFieldP: View {
 
     var body: some View {
         HStack {
-            Image(systemName: icon)
-                .foregroundColor(.blue)
-
             if isMultiline {
                 TextEditor(text: $text)
                     .frame(height: 80)
             } else {
                 TextField(placeholder, text: $text)
             }
+            
+            Image(systemName: icon)
+                .foregroundColor(Color(.systemGray2))
+                .fontWeight(.bold)
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))

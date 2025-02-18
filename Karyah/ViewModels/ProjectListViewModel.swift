@@ -26,10 +26,14 @@ class ProjectListViewModel: ObservableObject {
             isLoading = false
             return
         }
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            print("Token not found")
+            return
+        }
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
