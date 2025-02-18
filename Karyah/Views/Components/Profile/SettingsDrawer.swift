@@ -88,7 +88,7 @@ struct SettingsDrawer: View {
                             )
                             
                             
-                            Button(changePinViewModel.isLoading ? "Processing..." : "Change PIN") {
+                            Button(changePinViewModel.isLoading ? "Changing..." : "Change PIN") {
                                 withAnimation {
                                     changePinViewModel.changePin()
 //                                    drawerStep = .enterOTP  // Switch to OTP step   ---forgot pin
@@ -105,12 +105,18 @@ struct SettingsDrawer: View {
                             )
                             .disabled(changePinViewModel.isLoading)
                             
-                            if !changePinViewModel.message.isEmpty {
-                                Text(changePinViewModel.message)
-                                    .foregroundColor(.green)
-                                    .padding()
-                                    .accessibilityLabel(changePinViewModel.message)
-                            }
+                            .alert("Success", isPresented: $changePinViewModel.showAlert, actions: {
+                                       Button("OK", role: .cancel) { }
+                                   }, message: {
+                                       Text(changePinViewModel.alertMessage)
+                                   })
+                            
+//                            if !changePinViewModel.message.isEmpty {
+//                                Text(changePinViewModel.message)
+//                                    .foregroundColor(.green)
+//                                    .padding()
+//                                    .accessibilityLabel(changePinViewModel.message)
+//                            }
                         }
                     }
                     

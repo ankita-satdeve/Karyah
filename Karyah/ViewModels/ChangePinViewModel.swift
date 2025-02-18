@@ -13,16 +13,10 @@ class ChangePinViewModel: ObservableObject {
     @Published var newPin: String = ""
     @Published var message: String = ""
     @Published var isLoading: Bool = false
+    @Published var showAlert = false
+    @Published var alertMessage = ""
     
     func changePin() {
-//        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
-//            print("Token not found")
-//            return
-//        }
-//
-//        let headers: HTTPHeaders = [
-//            "Authorization": "Bearer \(token)"
-//        ]
         guard let token = UserDefaults.standard.string(forKey: "userToken") else { return }
         let url = "https://api.karyah.in/api/auth/change-pin"
         let headers: HTTPHeaders = [
@@ -43,6 +37,8 @@ class ChangePinViewModel: ObservableObject {
                     switch response.result {
                     case .success(let result):
                         self.message = result.message
+                        self.alertMessage = "PIN successfully changed.!!"
+                        self.showAlert = true
                     case .failure(let error):
                         self.message = error.localizedDescription
                     }
