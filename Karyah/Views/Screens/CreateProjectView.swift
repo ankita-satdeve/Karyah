@@ -10,6 +10,8 @@ import SwiftUI
 struct CreateProjectView: View {
     @StateObject private var viewModel = CreateProjectViewModel()
     @StateObject private var connectionViewModel = ConnectionViewModel()
+//    let projectCategories = ["Category 1", "Category 2", "Category 3"]
+//    let locations = ["Location 1", "Location 2", "Location 3"]
 
     var body: some View {
         NavigationView {
@@ -24,7 +26,7 @@ struct CreateProjectView: View {
                     // Form Section
                     VStack(alignment: .leading, spacing: 15) {
                         VStack {
-                            CustomInputFieldP(icon: "", placeholder: "Project Name", text: $viewModel.projectName)
+                            LargeCustomInputFieldP(icon: "", placeholder: "Project Name", text: $viewModel.projectName)
                             
                             HStack {
                                 // Start Date
@@ -34,13 +36,15 @@ struct CreateProjectView: View {
                             .padding(.top, 30)
                             
                             VStack {
-                                CustomInputFieldP(icon: "chevron.up.chevron.down", placeholder: "Project Category", text: $viewModel.projectCategory)
-                                CustomInputFieldP(icon: "chevron.up.chevron.down", placeholder: "Location", text: $viewModel.location)
-                                
-                                //                                Text(viewModel.coAdmin.isEmpty ? "Co-Admin" : viewModel.coAdmin)
-                                //                                    .font(.subheadline)
-                                //                                    .foregroundColor(viewModel.coAdmin.isEmpty ? Color(.systemGray2) : .primary)
-                                
+                                CustomInputFieldP(icon: "chevron.up.chevron.down",
+                                                  placeholder: "Project Category",
+                                                  text: $viewModel.projectCategory,
+                                                  options: ["Category1", "Category2", "Category3"])
+
+                                CustomInputFieldP(icon: "chevron.up.chevron.down",
+                                                  placeholder: "Location",
+                                                  text: $viewModel.location,
+                                                  options: ["Location1", "Location2", "Location3"])
                                 
                                 // Co-Admin Dropdown
                                 VStack(alignment: .leading, spacing: 8) {

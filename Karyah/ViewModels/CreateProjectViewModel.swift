@@ -46,11 +46,11 @@ class CreateProjectViewModel: ObservableObject {
         let projectData = ProjectModel(
             id: id,
             projectName: projectName,
-            location: location,
+            location: location,  // This should now have the selected value
             startDate: formattedStartDate,
             endDate: formattedEndDate,
-            coAdmins: coAdmins.isEmpty ? nil : coAdmins,  // Send user IDs, not names
-            projectCategory: projectCategory,
+            coAdmins: coAdmins.isEmpty ? nil : coAdmins,
+            projectCategory: projectCategory,  // This should now have the selected value
             description: description,
             taskCount: taskCount,
             userId: userId,
