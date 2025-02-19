@@ -25,11 +25,15 @@ struct ConnectionDropdownView: View {
                 VStack(alignment: .leading) {
                     ForEach(viewModel.filteredConnections) { connection in
                         Button(action: {
-                            if !selectedCoAdminIds.contains(connection.userId) {
-                                selectedCoAdminIds.append(connection.userId) // Store ID
-                                selectedCoAdminNames.append(connection.name) // Store Name
+                            if let index = selectedCoAdminIds.firstIndex(of: connection.userId) {
+                                // If already selected, remove from both lists
+                                selectedCoAdminIds.remove(at: index)
+                                selectedCoAdminNames.remove(at: index)
+                            } else {
+                                // Otherwise, add to both lists
+                                selectedCoAdminIds.append(connection.userId)
+                                selectedCoAdminNames.append(connection.name)
                             }
-                            isDropdownVisible = false
                         }) {
                             HStack {
                                 Image(systemName: "person.circle.fill")
@@ -49,6 +53,12 @@ struct ConnectionDropdownView: View {
                                     }
                                 }
                                 Spacer()
+                                
+                                // Show checkmark if selected
+                                if selectedCoAdminIds.contains(connection.userId) {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.blue)
+                                }
                             }
                             .padding()
                             .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.systemBackground)))

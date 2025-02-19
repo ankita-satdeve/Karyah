@@ -25,15 +25,9 @@ struct LargeCustomInputFieldP: View {
                 } else {
                     TextField(placeholder, text: $text)
                         .frame(height: 50) // Standard height for single-line input
-                        .padding(.horizontal)
-                        .background(Color(.systemGray6))
                         .cornerRadius(10)
                 }
 
-                Image(systemName: icon)
-                    .foregroundColor(Color(.systemGray2))
-                    .font(.title2)
-                    .padding(.trailing)
             }
             .padding()
             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))

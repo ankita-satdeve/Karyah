@@ -45,7 +45,7 @@ struct CreateProjectView: View {
                                 // Co-Admin Dropdown
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
-                                        Text(viewModel.selectedCoAdminNames.isEmpty ? "Select Co-Admins" : viewModel.selectedCoAdminNames.joined(separator: ", "))
+                                        Text(viewModel.selectedCoAdminNames.isEmpty ? "Co-Admins" : viewModel.selectedCoAdminNames.joined(separator: ", "))
                                             .font(.subheadline)
                                             .foregroundColor(viewModel.selectedCoAdminNames.isEmpty ? Color(.systemGray2) : .primary)
                                         
