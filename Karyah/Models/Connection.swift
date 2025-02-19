@@ -6,3 +6,24 @@
 //
 
 import Foundation
+
+struct Connection: Identifiable, Codable {
+    let id = UUID()
+    let connectionId: Int
+    let userId: Int
+    let name: String
+    let email: String?
+    let phone: String?
+    let location: String?
+    let dob: String?
+    let bio: String?
+    let profilePhoto: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case connectionId, userId, name, email, phone, location, dob, bio, profilePhoto
+    }
+}
+
+struct ConnectionResponse: Codable {
+    let connections: [Connection]
+}

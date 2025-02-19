@@ -8,11 +8,59 @@
 import SwiftUI
 
 struct ConnectionDropdownView: View {
+    @ObservedObject var viewModel: ConnectionViewModel
+    @Binding var selectedName: String
+    @Binding var isDropdownVisible: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            TextField("Search Co-Admin", text: $viewModel.searchText, onEditingChanged: { _ in
+                viewModel.filterConnections()
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding()
+            .accessibilityLabel("Search Co-Admin")
+            
+            ScrollView {
+                VStack(alignment: .leading) {
+                    ForEach(viewModel.filteredConnections) { connection in
+                        Button(action: {
+                            selectedName = connection.name
+                            isDropdownVisible = false
+                        }) {
+                            HStack {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(.primary)
+                                    .accessibilityHidden(true)
+                                
+                                VStack(alignment: .leading) {
+                                    Text(connection.name)
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+                                        .accessibilityLabel(connection.name)
+                                    
+                                    if let location = connection.location {
+                                        Text(location)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.systemBackground)))
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+        .background(Color(UIColor.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 5)
+//        .padding()
     }
-}
-
-#Preview {
-    ConnectionDropdownView()
 }

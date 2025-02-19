@@ -17,7 +17,7 @@ struct CustomInputFieldP: View {
         HStack {
             if isMultiline {
                 TextEditor(text: $text)
-                    .frame(height: 80)
+                    .frame(height: 60)
             } else {
                 TextField(placeholder, text: $text)
             }

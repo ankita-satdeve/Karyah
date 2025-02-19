@@ -18,6 +18,8 @@ struct KaryahApp: App {
 //            PINView()
 //            ProfileView()
             
+//            ManageConnectionView()
+//            
 //            ContentView()
 //                .environmentObject(authManager) // Inject it here, now  all child views (including DashboardView) will have access to authManager.
            
