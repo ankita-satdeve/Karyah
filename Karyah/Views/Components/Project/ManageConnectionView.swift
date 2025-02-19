@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ManageConnectionView: View {
     @StateObject private var viewModel = ConnectionViewModel()
-    @State private var selectedCoAdmin = ""
+    @State private var selectedCoAdmins: [Int] = []
+    @State private var selectedCoAdminNames: [String] = []
     
     var body: some View {
         GeometryReader { geometry in
@@ -35,8 +36,8 @@ struct ManageConnectionView: View {
                 }
                 .padding()
                 
-                if !selectedCoAdmin.isEmpty {
-                    Text("Selected: \(selectedCoAdmin)")
+                if !selectedCoAdmins.isEmpty {
+                    Text("Selected: \(selectedCoAdmins)")
                         .font(.title3)
                         .foregroundColor(.secondary)
                         .padding(.horizontal)
@@ -45,7 +46,13 @@ struct ManageConnectionView: View {
                 Spacer()
                 
                 if viewModel.isDropdownVisible {
-                    ConnectionDropdownView(viewModel: viewModel, selectedName: $selectedCoAdmin, isDropdownVisible: $viewModel.isDropdownVisible)
+                    ConnectionDropdownView(
+                        viewModel: viewModel,
+                        selectedCoAdminIds: $selectedCoAdmins,  // ✅ Ensure this exists
+                        selectedCoAdminNames: $selectedCoAdminNames, // ✅ Pass selected names
+                        isDropdownVisible: $viewModel.isDropdownVisible
+                    )
+
                 }
             }
             .frame(maxWidth: .infinity)

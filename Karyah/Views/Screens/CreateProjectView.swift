@@ -37,21 +37,17 @@ struct CreateProjectView: View {
                                 CustomInputFieldP(icon: "chevron.up.chevron.down", placeholder: "Project Category", text: $viewModel.projectCategory)
                                 CustomInputFieldP(icon: "chevron.up.chevron.down", placeholder: "Location", text: $viewModel.location)
                                 
+                                //                                Text(viewModel.coAdmin.isEmpty ? "Co-Admin" : viewModel.coAdmin)
+                                //                                    .font(.subheadline)
+                                //                                    .foregroundColor(viewModel.coAdmin.isEmpty ? Color(.systemGray2) : .primary)
+                                
+                                
                                 // Co-Admin Dropdown
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
-//                                        Text("Co-Admin")
-//                                            .font(.subheadline)
-//                                            .foregroundColor(Color(.systemGray2))
-                                        
-//                                        Text(viewModel.coAdmin)
-//                                            .font(.subheadline)
-//                                            .foregroundColor(.primary)
-                                        
-                                        Text(viewModel.coAdmin.isEmpty ? "Co-Admin" : viewModel.coAdmin)
+                                        Text(viewModel.selectedCoAdminNames.isEmpty ? "Select Co-Admins" : viewModel.selectedCoAdminNames.joined(separator: ", "))
                                             .font(.subheadline)
-                                            .foregroundColor(viewModel.coAdmin.isEmpty ? Color(.systemGray2) : .primary)
-
+                                            .foregroundColor(viewModel.selectedCoAdminNames.isEmpty ? Color(.systemGray2) : .primary)
                                         
                                         Spacer()
                                         
@@ -68,19 +64,13 @@ struct CreateProjectView: View {
                                         }
                                     }
                                     .padding()
-//                                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
                                     .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
-                                    
-//                                    if !viewModel.coAdmin.isEmpty {
-//                                        Text("Selected: \(viewModel.coAdmin)")
-//                                            .font(.footnote)
-//                                            .foregroundColor(.primary)
-//                                    }
                                     
                                     if connectionViewModel.isDropdownVisible {
                                         ConnectionDropdownView(
                                             viewModel: connectionViewModel,
-                                            selectedName: $viewModel.coAdmin,
+                                            selectedCoAdminIds: $viewModel.coAdmins,  // Pass IDs
+                                            selectedCoAdminNames: $viewModel.selectedCoAdminNames, // Pass Names
                                             isDropdownVisible: $connectionViewModel.isDropdownVisible
                                         )
                                     }
@@ -95,27 +85,27 @@ struct CreateProjectView: View {
                     
                     // Continue Button
                     ReusableButton(
-                        title: "Add Worklist →",
+                        title: "Add Project →",
                         foregroundColor: .white,
                         isDisabled: false,
                         action: viewModel.submitProject
                     )
                     .padding()
                     
-//                    Button(action: viewModel.submitProject) {
-//                        if viewModel.isLoading {
-//                            ProgressView()
-//                        } else {
-//                            Text("Add Worklist →")
-//                                .font(.headline)
-//                                .frame(maxWidth: .infinity)
-//                                .padding()
-//                                .background(Color.blue)
-//                                .foregroundColor(.white)
-//                                .cornerRadius(10)
-//                        }
-//                    }
-//                    .padding()
+                    //                    Button(action: viewModel.submitProject) {
+                    //                        if viewModel.isLoading {
+                    //                            ProgressView()
+                    //                        } else {
+                    //                            Text("Add Worklist →")
+                    //                                .font(.headline)
+                    //                                .frame(maxWidth: .infinity)
+                    //                                .padding()
+                    //                                .background(Color.blue)
+                    //                                .foregroundColor(.white)
+                    //                                .cornerRadius(10)
+                    //                        }
+                    //                    }
+                    //                    .padding()
                 }
                 .padding()
             }
@@ -131,7 +121,7 @@ struct CreateProjectView: View {
 struct DateInputField: View {
     let title: String
     @Binding var date: Date
-
+    
     var body: some View {
         HStack {
             Image(systemName: "calendar")
@@ -157,99 +147,3 @@ struct DateInputField: View {
 #Preview {
     CreateProjectView()
 }
-
-
-//import SwiftUI
-//
-//struct CreateProjectView: View {
-//    @StateObject private var viewModel = CreateProjectViewModel()
-//
-//    var body: some View {
-//        NavigationView {
-//            ScrollView {
-//                VStack(alignment: .leading, spacing: 16) {
-//                    
-//                    // Header
-//                    HeaderCard(
-//                        title: "Create New Project",
-//                        description: "Fill in the details below to create a new project.",
-//                        buttonText: nil,
-//                        buttonAction: {}
-//                    )
-//                    
-//                    Divider()
-//                      
-//                    // Form Section
-//                    VStack(alignment: .leading, spacing: 20) {
-//                        
-//                        // Project Name
-//                        CustomInputFieldP(icon: "", placeholder: "Project Name", text: $viewModel.projectName)
-//                        
-//                        // Date Pickers
-//                        HStack(spacing: 10) {
-//                            // Start Date
-//                            DateInputField(title: "Start Date", selection: $viewModel.startDate)
-//                            
-//                            // End Date
-//                            DateInputField(title: "End Date", selection: $viewModel.endDate)
-//                        }
-//                        
-//                        // Additional Fields
-//                        VStack(spacing: 16) {
-//                            CustomInputFieldP(icon: "chevron.up.chevron.down", placeholder: "Project Category", text: $viewModel.projectCategory)
-//                            CustomInputFieldP(icon: "chevron.up.chevron.down", placeholder: "Location", text: $viewModel.location)
-//                            CustomInputFieldP(icon: "person", placeholder: "Co-Admin", text: $viewModel.coAdmin)
-//                            CustomInputFieldP(icon: "", placeholder: "Description", text: $viewModel.description, isMultiline: true)
-//                        }
-//                    }
-//                    
-//                    // Continue Button
-//                    ReusableButton(
-//                        title: "Add Worklist →",
-//                        foregroundColor: .white,
-//                        isDisabled: viewModel.isLoading,
-//                        isLoading: viewModel.isLoading,
-//                        action: viewModel.submitProject
-//                    )
-//                }
-//                .padding() // Ensure padding is applied to the whole VStack
-//            }
-//            .background(Color(.systemBackground)) // Light/Dark mode support
-//            .navigationDestination(isPresented: $viewModel.isNavigatingToDetails) {
-//                ProjectListView()
-//            }
-//        }
-//    }
-//}
-//
-//// MARK: - Date Input Field Component
-//struct DateInputField: View {
-//    var title: String
-//    @Binding var selection: Date
-//
-//    var body: some View {
-//        HStack {
-//            Image(systemName: "calendar")
-//                .resizable()
-//                .scaledToFit()
-//                .frame(width: 23, height: 26)
-//                .padding(.leading)
-//
-//            VStack(alignment: .leading) {
-//                Text(title)
-//                    .font(.subheadline)
-//                    .foregroundColor(.gray)
-//                DatePicker("", selection: $selection, displayedComponents: .date)
-//                    .labelsHidden()
-//            }
-//            .padding()
-//        }
-//        .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
-//        .frame(height: 50)
-//    }
-//}
-//
-//// MARK: - Preview
-//#Preview {
-//    CreateProjectView()
-//}

@@ -13,7 +13,7 @@ struct ProjectModel: Identifiable, Codable {
     var location: String?
     var startDate: String?
     var endDate: String?
-    var coAdmin: String?
+    var coAdmins: [Int]?
     var projectCategory: String?
     var description: String?
     var taskCount: Int?
@@ -27,7 +27,7 @@ struct ProjectModel: Identifiable, Codable {
         case location
         case startDate
         case endDate
-        case coAdmin = "coAdminId"
+        case coAdmins = "coAdminIds"
         case projectCategory
         case description
         case taskCount

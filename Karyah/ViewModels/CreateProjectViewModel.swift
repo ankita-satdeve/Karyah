@@ -13,7 +13,9 @@ class CreateProjectViewModel: ObservableObject {
     @Published var location = ""
     @Published var startDate = Date()
     @Published var endDate = Date()
-    @Published var coAdmin = ""
+    @Published var coAdmins: [Int] = []
+//    @Published var coAdmins: [Int] = [] // Store IDs
+    @Published var selectedCoAdminNames: [String] = [] // Store Names
     @Published var projectCategory = ""
     @Published var description = ""
     @Published var isNavigatingToDetails = false
@@ -22,7 +24,7 @@ class CreateProjectViewModel: ObservableObject {
     @Published var userId: Int = 15  // Hardcoded or retrieved from UserDefaults
     @Published var createdAt = Date()
     @Published var updatedAt = Date()
-
+    
     func submitProject() {
         guard let url = URL(string: "https://api.karyah.in/api/projects/create") else {
             print("Invalid URL")
@@ -47,7 +49,7 @@ class CreateProjectViewModel: ObservableObject {
             location: location,
             startDate: formattedStartDate,
             endDate: formattedEndDate,
-            coAdmin: coAdmin.isEmpty ? nil : coAdmin,  // Convert empty string to nil
+            coAdmins: coAdmins.isEmpty ? nil : coAdmins,  // Send user IDs, not names
             projectCategory: projectCategory,
             description: description,
             taskCount: taskCount,
@@ -94,6 +96,4 @@ class CreateProjectViewModel: ObservableObject {
     }
 }
 
-//#Preview {
-//    CreateProjectView()
-//}
+
