@@ -48,7 +48,7 @@ struct ProjectListView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color(UIColor.secondarySystemBackground))
                 )
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 
                 // Loading, Error, or Project List
                 if viewModel.isLoading {
@@ -82,6 +82,7 @@ struct ProjectListView: View {
                 }
             }
         }
+        FloatingAddProjectButton()
     }
 }
 #Preview {

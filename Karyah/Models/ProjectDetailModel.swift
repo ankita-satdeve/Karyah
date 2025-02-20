@@ -27,10 +27,33 @@ struct ProjectDetailModel: Identifiable, Codable {
     var updatedAt: String
     
     struct CoAdmin: Codable, Identifiable {
-            var id: Int { userId }
-            var userId: Int
-            var name: String
-            var email: String
+        var id: Int { userId }
+        var userId: Int
+        var name: String
+        var email: String
+        var profilePhoto: String?
+    }
+    /// **Formatted End Date**
+    var formattedEndDate: String {
+        formatDate(from: endDate)
         }
-}
 
+        /// **Formatted Start Date**
+        var formattedStartDate: String {
+            formatDate(from: startDate)
+        }
+
+        /// Helper function to convert ISO8601 date to `"21 Feb, 2025"` format
+        private func formatDate(from isoDate: String?) -> String {
+            guard let isoDate = isoDate else { return "N/A" }
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+            
+            if let date = formatter.date(from: isoDate) {
+                let outputFormatter = DateFormatter()
+                outputFormatter.dateFormat = "dd MMM, yyyy" // Example: 21 Feb, 2025
+                return outputFormatter.string(from: date)
+            }
+            return "N/A"
+        }
+    }

@@ -33,6 +33,12 @@ struct CreateProjectView: View {
                             }
                             .padding(.top, 30)
                             
+//                            HStack {
+//                                ProjectDateDView(label: "Start Date", date: $viewModel.startDate)
+//
+//                                ProjectDateDView(label: "End Date", date: $viewModel.endDate)
+//                            }
+                            
                             VStack {
                                 CustomInputFieldP(icon: "chevron.up.chevron.down",
                                                   placeholder: "Project Category",
@@ -49,7 +55,7 @@ struct CreateProjectView: View {
                                     HStack {
                                         Text(viewModel.selectedCoAdminNames.isEmpty ? "Co-Admins" : viewModel.selectedCoAdminNames.joined(separator: ", "))
                                             .font(.headline)
-                                            .foregroundColor(viewModel.selectedCoAdminNames.isEmpty ? Color(.systemGray2) : .primary)
+                                            .foregroundColor(viewModel.selectedCoAdminNames.isEmpty ? Color(.systemGray5) : .primary)
                                         
                                         Spacer()
                                         

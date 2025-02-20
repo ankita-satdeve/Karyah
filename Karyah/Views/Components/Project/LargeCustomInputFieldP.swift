@@ -18,7 +18,7 @@ struct LargeCustomInputFieldP: View {
             HStack {
                 if isMultiline {
                     TextEditor(text: $text)
-                        .frame(minHeight: 120) // Increased height for better multiline support
+                        .frame(minHeight: 250, maxHeight: .infinity) 
                         .padding(5)
                         .background(Color(.systemGray6))
                         .cornerRadius(10)

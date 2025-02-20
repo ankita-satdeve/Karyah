@@ -14,6 +14,7 @@ class ProjectListViewModel: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var errorMessage: String? = nil
     @Published var searchText: String = ""
+    @Published var isNavigatingToDetails = false
 
     private var cancellables = Set<AnyCancellable>()
 

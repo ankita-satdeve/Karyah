@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct ProjectDetailCoAdminRow: View {
+    let label: String
+    let value: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Text("\(label) :")
+                .font(.subheadline)
+                .bold()
+            Text(value)
+                .font(.body)
+                .foregroundColor(.primary)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color(.systemGray3), lineWidth: 2)
+        )
+        .padding(.horizontal)
     }
 }
 
-#Preview {
-    ProjectDetailCoAdminRow()
-}

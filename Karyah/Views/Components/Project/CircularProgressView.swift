@@ -13,17 +13,18 @@ struct CircularProgressView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(lineWidth: 10)
-                .foregroundColor(.white)
+                .stroke(lineWidth: 5)
+                .foregroundColor(Color.gray.opacity(0.3))
             Circle()
                 .trim(from: 0.0, to: CGFloat(progress))
-                .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                .foregroundColor(.orange)
+                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .foregroundColor(Color(hex: "B9361F"))
                 .rotationEffect(Angle(degrees: -90))
             Text("\(Int(progress * 100))%")
                 .font(.headline)
-//                .font(.system(size: 28, weight: .bold, design: .default))
+                .foregroundColor(.primary)
                 .bold()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
