@@ -12,19 +12,28 @@ struct ProjectDateDView: View {
     let date: String
     
     var body: some View {
-        VStack {
+        
+        HStack {
             Image(systemName: "calendar")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40, height: 40)
                 .foregroundColor(.primary)
-            Text(label)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Text(date)
-                .font(.subheadline)
-                .bold()
+            
+            VStack {
+                Text(label)
+                    .font(.caption)
+                    .foregroundColor(.primary)
+                Text(date)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+            }
+            
         }
         .padding()
         .frame(maxWidth: .infinity)
         .background(Color(.systemGray6))
         .cornerRadius(10)
+
     }
 }

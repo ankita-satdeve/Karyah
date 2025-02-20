@@ -13,9 +13,9 @@ struct KaryahApp: App {
     var body: some Scene {
         WindowGroup {
             
-//            ProjectDetailsDView()
+//            ProjectDetailView()
             
-            ProjectListView()
+              ProjectListView()
             
 //            PINView()
 //            ProfileView()
