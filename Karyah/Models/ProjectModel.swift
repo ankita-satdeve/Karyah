@@ -8,7 +8,7 @@
 import Foundation
 
 struct ProjectModel: Identifiable, Codable {
-    var id: String
+    var id: String   //Int
     var projectName: String
     var location: String?
     var startDate: String?

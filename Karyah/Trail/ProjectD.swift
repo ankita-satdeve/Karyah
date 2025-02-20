@@ -5,14 +5,19 @@
 //  Created by Prance Studio on 20/02/25.
 //
 
-import SwiftUI
+import Foundation
 
-struct ProjectD: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    ProjectD()
+struct ProjectD: Identifiable, Codable {
+    let id: Int
+    let name: String
+    let dueDate: String
+    let progress: Double
+    let startDate: String
+    let endDate: String
+    let category: String
+    let location: String
+    let coAdminImage: String?
+    let description: String
+    let completedTasks: Int
+    let totalTasks: Int
 }

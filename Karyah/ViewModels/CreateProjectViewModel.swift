@@ -14,14 +14,13 @@ class CreateProjectViewModel: ObservableObject {
     @Published var startDate = Date()
     @Published var endDate = Date()
     @Published var coAdmins: [Int] = []
-//    @Published var coAdmins: [Int] = [] // Store IDs
-    @Published var selectedCoAdminNames: [String] = [] // Store Names
+    @Published var selectedCoAdminNames: [String] = []
     @Published var projectCategory = ""
     @Published var description = ""
     @Published var isNavigatingToDetails = false
     @Published var isLoading = false
-    @Published var taskCount: Int? = nil  // Optional to match API
-    @Published var userId: Int = 15  // Hardcoded or retrieved from UserDefaults
+    @Published var taskCount: Int? = nil
+    @Published var userId: Int = 0
     @Published var createdAt = Date()
     @Published var updatedAt = Date()
     
@@ -46,11 +45,11 @@ class CreateProjectViewModel: ObservableObject {
         let projectData = ProjectModel(
             id: id,
             projectName: projectName,
-            location: location,  // This should now have the selected value
+            location: location,
             startDate: formattedStartDate,
             endDate: formattedEndDate,
             coAdmins: coAdmins.isEmpty ? nil : coAdmins,
-            projectCategory: projectCategory,  // This should now have the selected value
+            projectCategory: projectCategory,
             description: description,
             taskCount: taskCount,
             userId: userId,

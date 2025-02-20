@@ -34,7 +34,7 @@ struct ProjectListView: View {
                     buttonText: "Create",
                     buttonAction: true // This controls whether the button is shown or not
                 )
-
+                
                 
                 // Search Bar
                 HStack {
@@ -49,7 +49,7 @@ struct ProjectListView: View {
                         .fill(Color(UIColor.secondarySystemBackground))
                 )
                 .padding(.horizontal)
-
+                
                 // Loading, Error, or Project List
                 if viewModel.isLoading {
                     ProgressView("Loading Projects...")
@@ -60,26 +60,30 @@ struct ProjectListView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 } else {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        ScrollViewReader { proxy in
-                            LazyVStack(spacing: 12) {
-                                ForEach(filteredProjects) { project in
-                                    ProjectCard(project: project)
-                                        .id(project.id)
+                    NavigationView {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            ScrollViewReader { proxy in
+                                LazyVStack(spacing: 12) {
+                                    ForEach(viewModel.projects) { project in
+                                        NavigationLink(destination: ProjectDetailView(projectId: project.id)) {
+                                            ProjectCard(project: project)
+                                                .id(project.id)
+                                        }
+                                    }
                                 }
+                                .padding(.horizontal)
                             }
-                            .padding(.horizontal)
                         }
                     }
+                    
+                    .navigationTitle("Projects")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
                 }
             }
-            .navigationTitle("Projects")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
         }
     }
 }
-
 #Preview {
     ProjectListView()
 }

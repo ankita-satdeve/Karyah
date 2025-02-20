@@ -10,6 +10,7 @@ import Combine
 
 class ProjectListViewModel: ObservableObject {
     @Published var projects: [ProjectModel] = []
+    @Published var project: ProjectDetailModel?
     @Published var isLoading: Bool = true
     @Published var errorMessage: String? = nil
     @Published var searchText: String = ""
@@ -58,6 +59,40 @@ class ProjectListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    
+    func fetchProject(by id: String) {
+            guard let url = URL(string: "https://api.karyah.in/api/projects/\(id)") else {
+                errorMessage = "Invalid URL"
+                isLoading = false
+                return
+            }
+            guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+                print("Token not found")
+                return
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            
+        URLSession.shared.dataTaskPublisher(for: request)
+            .map(\.data)
+            .decode(type: ProjectResponse.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    self.errorMessage = "Failed to load project: \(error.localizedDescription)"
+                    print("Decoding error: \(error)")
+                case .finished:
+                    break
+                }
+                self.isLoading = false
+            }, receiveValue: { result in
+                self.project = result.project  // ✅ Assign correctly now
+            })
+            .store(in: &cancellables)
+        }
 
     var filteredProjects: [ProjectModel] {
         guard !searchText.isEmpty else { return projects }

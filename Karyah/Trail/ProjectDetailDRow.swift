@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct ProjectDetailDRow: View {
+    let label: String
+    let value: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Text("\(label) :")
+                .font(.subheadline)
+                .bold()
+            Text(value)
+                .font(.body)
+                .foregroundColor(.primary)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.systemGray6))
+        .cornerRadius(10)
+        .padding(.horizontal)
     }
-}
-
-#Preview {
-    ProjectDetailDRow()
 }

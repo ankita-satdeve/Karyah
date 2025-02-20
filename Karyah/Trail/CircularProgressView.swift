@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct CircularProgressView: View {
+    let progress: Double
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 5)
+                .opacity(0.3)
+                .foregroundColor(.blue)
+            Circle()
+                .trim(from: 0.0, to: CGFloat(progress))
+                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .foregroundColor(.blue)
+                .rotationEffect(Angle(degrees: -90))
+            Text("\(Int(progress * 100))%")
+                .font(.caption)
+                .bold()
+        }
     }
-}
-
-#Preview {
-    CircularProgressView()
 }

@@ -10,8 +10,6 @@ import SwiftUI
 struct CreateProjectView: View {
     @StateObject private var viewModel = CreateProjectViewModel()
     @StateObject private var connectionViewModel = ConnectionViewModel()
-//    let projectCategories = ["Category 1", "Category 2", "Category 3"]
-//    let locations = ["Location 1", "Location 2", "Location 3"]
 
     var body: some View {
         NavigationView {
@@ -26,7 +24,7 @@ struct CreateProjectView: View {
                     // Form Section
                     VStack(alignment: .leading, spacing: 15) {
                         VStack {
-                            LargeCustomInputFieldP(icon: "", placeholder: "Project Name", text: $viewModel.projectName)
+                            CustomInputFieldProjectName(icon: "", placeholder: "Project Name", text: $viewModel.projectName)
                             
                             HStack {
                                 // Start Date
@@ -50,7 +48,7 @@ struct CreateProjectView: View {
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
                                         Text(viewModel.selectedCoAdminNames.isEmpty ? "Co-Admins" : viewModel.selectedCoAdminNames.joined(separator: ", "))
-                                            .font(.subheadline)
+                                            .font(.headline)
                                             .foregroundColor(viewModel.selectedCoAdminNames.isEmpty ? Color(.systemGray2) : .primary)
                                         
                                         Spacer()
