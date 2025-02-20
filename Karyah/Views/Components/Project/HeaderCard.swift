@@ -39,7 +39,7 @@ struct HeaderCard: View {
                 if let description = description, !description.isEmpty {
                     Text(description)
                         .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.white.opacity(0.9))
                         .lineLimit(2) // Allow multi-line description
                 }
                 

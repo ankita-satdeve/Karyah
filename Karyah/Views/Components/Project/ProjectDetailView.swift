@@ -15,15 +15,6 @@ struct ProjectDetailView: View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    
-                    // Back Button
-                    Button(action: { /* Handle Back Action */ }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("Back").font(.title3)
-                        }
-                    }
-                    .padding(.horizontal)
 
                     if viewModel.isLoading {
                         ProgressView("Loading Project...")
@@ -37,6 +28,7 @@ struct ProjectDetailView: View {
                         
                         // Header Card
                         HStack {
+                            
                             VStack(alignment: .leading) {
                                 Text(project.projectName)
                                     .font(.title)
@@ -46,13 +38,16 @@ struct ProjectDetailView: View {
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
-                                
                             }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxHeight: .infinity, alignment: .topLeading) 
                             .padding()
-                            .frame(maxWidth: .infinity)
+
                             Spacer()
-                            CircularProgressView(progress: 0.75) // Placeholder Progress
-                                .frame(width: 50, height: 50)
+                            CircularProgressView(progress: 0.75)
+                                .foregroundColor(.white)
+                                .fontWeight(.bold)
+                                .frame(width: 70, height: 70)
                                 .padding()
                         }
                         .frame(height: 150)
@@ -122,14 +117,12 @@ struct ProjectDetailView: View {
                             .padding(.horizontal)
                         }
                         
-                        ProjectDetailDRow(label: "Description", value: project.description ?? "N/A")
-                        
-                        
+                        ProjectDetailDescriptionRow(label: "Description", value: project.description ?? "N/A")
                         
                         // Buttons
                         VStack(spacing: 10) {
-                            ProjectActionButton(title: "Raise an Issue", icon: "issue", color: .red) {}
-                            ProjectActionButton(title: "View Issue List", icon: "issue", color: .red) {}
+                            ProjectActionButton(title: "Raise an Issue", icon: "issue", color:  Color(hex: "#C6381E")) {}
+                            ProjectActionButton(title: "View Issue List", icon: "issue", color: Color(hex: "#C6381E")) {}
                             
                         }
                         .padding(.horizontal)
@@ -137,11 +130,11 @@ struct ProjectDetailView: View {
                         
                         VStack {
                             ReusableButton(
-                                title: "View All Worklists",
+                                title: "View All Worklists  →",   //assign from own- save changes, if other then show View All Projects
                                 foregroundColor: .white,
                                 isDisabled: false,
                                 action: {
-                                    viewModel.fetchProjects()   //remove later with Worklist or project
+                                    viewModel.fetchProjects()   //remove later with project
                                 }
                             )
                         }

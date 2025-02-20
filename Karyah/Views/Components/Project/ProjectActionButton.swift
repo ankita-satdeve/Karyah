@@ -18,8 +18,10 @@ struct ProjectActionButton: View {
             HStack {
                 Image(icon)
                 Text(title)
+                    .foregroundColor(.primary)
                 Spacer()
                 Image(systemName: "arrow.right")
+                    .foregroundColor(Color(hex: "#C6381E"))
             }
             .padding()
             .frame(maxWidth: .infinity)

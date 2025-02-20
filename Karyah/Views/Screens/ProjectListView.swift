@@ -30,8 +30,8 @@ struct ProjectListView: View {
                 // Header Card
                 HeaderCard(
                     title: "All Projects",
-                    description: "The list of projects you have taken so far",
-                    buttonText: "Create",
+                    description: "The list of projects you\n have taken so far",
+                    buttonText: "Project",
                     buttonAction: true // This controls whether the button is shown or not
                 )
                 
@@ -39,7 +39,7 @@ struct ProjectListView: View {
                 // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.primary)
                     TextField("Search Project", text: $viewModel.searchText)
                         .foregroundColor(.primary)
                 }

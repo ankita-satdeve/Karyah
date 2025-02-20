@@ -24,7 +24,7 @@ struct ProjectDetailDRow: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color(.systemGray2), lineWidth: 2) // Border with same color
+                .stroke(Color(.systemGray3), lineWidth: 2) 
         )
         .padding(.horizontal)
     }

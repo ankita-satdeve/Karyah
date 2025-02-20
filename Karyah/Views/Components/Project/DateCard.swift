@@ -8,11 +8,38 @@
 import SwiftUI
 
 struct DateCard: View {
+    var title: String
+    var date: String
+    var icon: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Image(systemName: icon)
+                Text(title)
+            }
+            .font(.caption)
+            
+            Text(date)
+                .bold()
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray))
     }
 }
 
-#Preview {
-    DateCard()
+struct AssignUserCard: View {
+    var body: some View {
+        VStack {
+            Image(systemName: "person.circle.fill")
+                .font(.title)
+                .foregroundColor(.gray)
+            Text("+ Assign To")
+                .font(.caption)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray))
+    }
 }

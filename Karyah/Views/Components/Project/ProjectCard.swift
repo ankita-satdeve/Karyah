@@ -21,13 +21,22 @@ struct ProjectCard: View {
                     .font(.headline)
                     .foregroundColor(.primary)
                 HStack {
-                    Label("Location: \(((project.location?.isEmpty) != nil) ? "N/A" : project.location)", systemImage: "location.fill")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Spacer()
                     Text("Start: \(project.startDate?.prefix(10))")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                    Spacer()
+                    Label("Location: \(((project.location?.isEmpty) != nil) ? "N/A" : project.location)", systemImage: "location.fill")
+                    //                    stopwatch
+                    //                    location
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    
+//                    CircularProgressView(progress: 0.80)
+//                        .foregroundColor(.white)
+//                        .fontWeight(.bold)
+//                        .frame(width: 50, height: 50)
+//                        .padding()
                 }
             }
             Spacer()

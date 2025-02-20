@@ -17,7 +17,7 @@ struct ProjectDateDView: View {
             Image(systemName: "calendar")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 40, height: 40)
+                .frame(width: 30, height: 40)
                 .foregroundColor(.primary)
             
             VStack {
@@ -25,7 +25,7 @@ struct ProjectDateDView: View {
                     .font(.caption)
                     .foregroundColor(.primary)
                 Text(date)
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundColor(.primary)
             }
             
