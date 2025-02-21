@@ -12,9 +12,13 @@ struct ProjectCard: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.gray.opacity(0.1))
-                .frame(width: 50, height: 50)
+            VStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .frame(width: 50, height: 50)
+            }
+            .padding()
+            
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(project.projectName)
@@ -26,9 +30,14 @@ struct ProjectCard: View {
                         .scaledToFit()
                         .frame(width: 20, height: 20)
                         .foregroundColor(.primary)
-                    Text("\(project.startDate?.prefix(10))")
+                    
+                    Text(project.endDate ?? "N/A")
                         .font(.subheadline)
                         .foregroundColor(.primary)
+                    
+//                    Text("\(project.startDate?.prefix(10))")
+//                        .font(.subheadline)
+//                        .foregroundColor(.primary)
                 }
                 
                 HStack {
@@ -37,17 +46,28 @@ struct ProjectCard: View {
                         .scaledToFit()
                         .frame(width: 20, height: 20)
                         .foregroundColor(.primary)
-                    Text("\(((project.location?.isEmpty) != nil) ? "N/A" : project.location)")
+                    
+                    Text(project.location ?? "N/A")
                         .font(.subheadline)
                         .foregroundColor(.primary)
+                    
+//                    Text("\(((project.location?.isEmpty) != nil) ? "N/A" : project.location)")
+//                        .font(.subheadline)
+//                        .foregroundColor(.primary)
                 }
                 
             }
-            CircularProgressView(progress: 0.80)
-                .foregroundColor(.white)
-                .fontWeight(.bold)
-                .frame(width: 60, height: 60)
-                .padding()
+            .lineLimit(1)
+//            .padding()
+            
+            HStack {
+                CircularProgressView(progress: 0.80)
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .padding()
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            
             
         }
         .padding()

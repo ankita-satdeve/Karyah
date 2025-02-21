@@ -114,7 +114,7 @@ struct CreateProjectView: View {
                                         )
                                     }
                                 }
-                                
+                               
                                 LargeCustomInputFieldP(icon: "", placeholder: "Description", text: $viewModel.description)
                             }
                             .padding(.top, 30)

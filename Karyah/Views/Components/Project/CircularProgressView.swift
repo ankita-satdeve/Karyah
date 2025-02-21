@@ -25,6 +25,6 @@ struct CircularProgressView: View {
                 .foregroundColor(.primary)
                 .bold()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(width: 60, height: 60)
     }
 }

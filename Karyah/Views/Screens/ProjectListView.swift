@@ -32,7 +32,7 @@ struct ProjectListView: View {
                     title: "All Projects",
                     description: "The list of projects you\n have taken so far",
                     buttonText: "Project",
-                    buttonAction: true // This controls whether the button is shown or not
+                    buttonAction: true
                 )
                 
                 
@@ -81,7 +81,9 @@ struct ProjectListView: View {
                     .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
                 }
             }
-            FloatingAddProjectButton()
+//            FloatingAddProjectButton()
+            FloatingMenuView()
+            
         }
     }
 }
