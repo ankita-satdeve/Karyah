@@ -13,8 +13,9 @@ class CreateProjectViewModel: ObservableObject {
     @Published var location = ""
     @Published var startDate = Date()
     @Published var endDate = Date()
-    @Published var coAdmins: [Int] = []
-    @Published var selectedCoAdminNames: [String] = []
+    @Published var coAdmins: [Int] = []  // Store Co-Admin IDs
+    @Published var selectedCoAdminNames: [String] = []  // Store Co-Admin Names
+    @Published var selectedCoAdminPhotos: [String] = [] // Store Co-Admin Profile Photos
     @Published var projectCategory = ""
     @Published var description = ""
     @Published var isNavigatingToDetails = false

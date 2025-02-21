@@ -84,7 +84,6 @@ struct ProjectDetailCoAdminRow: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color(.systemGray3), lineWidth: 2)
         )
-        .padding(.vertical, isExpanded ? 20 : 0) // **Padding only when expanded**
         .onTapGesture {
             withAnimation(.easeInOut) {
                 isExpanded.toggle()

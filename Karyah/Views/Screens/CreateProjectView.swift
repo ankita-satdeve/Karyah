@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateProjectView: View {
     @StateObject private var viewModel = CreateProjectViewModel()
     @StateObject private var connectionViewModel = ConnectionViewModel()
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -33,18 +33,18 @@ struct CreateProjectView: View {
                             }
                             .padding(.top, 30)
                             
-//                            HStack {
-//                                ProjectDateDView(label: "Start Date", date: $viewModel.startDate)
-//
-//                                ProjectDateDView(label: "End Date", date: $viewModel.endDate)
-//                            }
+                            //                            HStack {
+                            //                                ProjectDateDView(label: "Start Date", date: $viewModel.startDate)
+                            //
+                            //                                ProjectDateDView(label: "End Date", date: $viewModel.endDate)
+                            //                            }
                             
                             VStack {
                                 CustomInputFieldP(icon: "chevron.up.chevron.down",
                                                   placeholder: "Project Category",
                                                   text: $viewModel.projectCategory,
                                                   options: ["Category1", "Category2", "Category3"])
-
+                                
                                 CustomInputFieldP(icon: "chevron.up.chevron.down",
                                                   placeholder: "Location",
                                                   text: $viewModel.location,
@@ -53,11 +53,40 @@ struct CreateProjectView: View {
                                 // Co-Admin Dropdown
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
-                                        Text(viewModel.selectedCoAdminNames.isEmpty ? "Co-Admins" : viewModel.selectedCoAdminNames.joined(separator: ", "))
-                                            .font(.headline)
-                                            .foregroundColor(viewModel.selectedCoAdminNames.isEmpty ? Color(.systemGray5) : .primary)
+                                        if viewModel.selectedCoAdminNames.isEmpty {
+                                            Text("Co-Admins")
+                                                .font(.headline)
+                                                .foregroundColor(Color(.systemGray3))
+                                        } else {
+                                            // Show names as comma-separated text
+                                            Text(viewModel.selectedCoAdminNames.joined(separator: ", "))
+                                                .font(.body)
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                        }
                                         
                                         Spacer()
+                                        
+                                        // Display overlapping profile images
+                                        ZStack {
+                                            ForEach(Array(viewModel.selectedCoAdminPhotos.enumerated()), id: \.0) { index, photo in
+                                                AsyncImage(url: URL(string: photo)) { imagePhase in
+                                                    if let image = imagePhase.image {
+                                                        image.resizable().scaledToFill()
+                                                    } else {
+                                                        Image(systemName: "person.circle.fill")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .foregroundColor(.gray)
+                                                    }
+                                                }
+                                                .frame(width: 35, height: 35)
+                                                .clipShape(Circle())
+                                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                                .offset(x: CGFloat(index * -15)) // Overlapping effect
+                                            }
+                                        }
+                                        
                                         
                                         Button(action: {
                                             connectionViewModel.isDropdownVisible.toggle()
@@ -77,8 +106,9 @@ struct CreateProjectView: View {
                                     if connectionViewModel.isDropdownVisible {
                                         ConnectionDropdownView(
                                             viewModel: connectionViewModel,
-                                            selectedCoAdminIds: $viewModel.coAdmins,  // Pass IDs
-                                            selectedCoAdminNames: $viewModel.selectedCoAdminNames, // Pass Names
+                                            selectedCoAdminIds: $viewModel.coAdmins,
+                                            selectedCoAdminNames: $viewModel.selectedCoAdminNames,
+                                            selectedCoAdminPhotos: $viewModel.selectedCoAdminPhotos, // Pass profile photos
                                             isDropdownVisible: $connectionViewModel.isDropdownVisible
                                         )
                                     }
@@ -99,21 +129,6 @@ struct CreateProjectView: View {
                         action: viewModel.submitProject
                     )
                     .padding()
-                    
-                    //                    Button(action: viewModel.submitProject) {
-                    //                        if viewModel.isLoading {
-                    //                            ProgressView()
-                    //                        } else {
-                    //                            Text("Add Worklist →")
-                    //                                .font(.headline)
-                    //                                .frame(maxWidth: .infinity)
-                    //                                .padding()
-                    //                                .background(Color.blue)
-                    //                                .foregroundColor(.white)
-                    //                                .cornerRadius(10)
-                    //                        }
-                    //                    }
-                    //                    .padding()
                 }
                 .padding()
             }

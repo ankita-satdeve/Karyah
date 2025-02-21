@@ -5,6 +5,7 @@
 //  Created by Prance Studio on 19/02/25.
 //
 
+
 import SwiftUI
 import Alamofire
 
@@ -13,20 +14,20 @@ class ConnectionViewModel: ObservableObject {
     @Published var filteredConnections: [Connection] = []
     @Published var isDropdownVisible = false
     @Published var searchText = ""
-    
+
     func fetchManageConnections() {
         let url = "https://api.karyah.in/api/connections/list"
-        
+
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
             print("Token not found")
             return
         }
-        
+
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
             "Content-Type": "application/json"
         ]
-        
+
         AF.request(url, method: .get, headers: headers).responseDecodable(of: ConnectionResponse.self) { response in
             DispatchQueue.main.async {
                 switch response.result {
@@ -39,7 +40,7 @@ class ConnectionViewModel: ObservableObject {
             }
         }
     }
-    
+
     func filterConnections() {
         if searchText.isEmpty {
             filteredConnections = connections
@@ -48,3 +49,4 @@ class ConnectionViewModel: ObservableObject {
         }
     }
 }
+

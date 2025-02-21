@@ -51,6 +51,7 @@ struct ProjectCard: View {
             
         }
         .padding()
+        .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 12) // Rounded corners for the white box
                 .fill(Color.white)

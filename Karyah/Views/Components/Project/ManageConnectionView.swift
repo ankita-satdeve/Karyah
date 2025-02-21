@@ -49,7 +49,7 @@ struct ManageConnectionView: View {
                     ConnectionDropdownView(
                         viewModel: viewModel,
                         selectedCoAdminIds: $selectedCoAdmins,  // ✅ Ensure this exists
-                        selectedCoAdminNames: $selectedCoAdminNames, // ✅ Pass selected names
+                        selectedCoAdminNames: $selectedCoAdminNames, selectedCoAdminPhotos: $selectedCoAdminNames, // ✅ Pass selected names
                         isDropdownVisible: $viewModel.isDropdownVisible
                     )
 

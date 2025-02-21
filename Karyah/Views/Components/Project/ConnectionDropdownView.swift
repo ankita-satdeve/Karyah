@@ -9,67 +9,55 @@ import SwiftUI
 
 struct ConnectionDropdownView: View {
     @ObservedObject var viewModel: ConnectionViewModel
-    @Binding var selectedCoAdminIds: [Int] // Store IDs
-    @Binding var selectedCoAdminNames: [String] // Store Names
+    @Binding var selectedCoAdminIds: [Int]
+    @Binding var selectedCoAdminNames: [String]
+    @Binding var selectedCoAdminPhotos: [String]
     @Binding var isDropdownVisible: Bool
 
     var body: some View {
         VStack {
-            TextField("Search Co-Admin", text: $viewModel.searchText, onEditingChanged: { _ in
-                viewModel.filterConnections()
-            })
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding()
-
-            ScrollView {
-                VStack(alignment: .leading) {
-                    ForEach(viewModel.filteredConnections) { connection in
-                        Button(action: {
-                            if let index = selectedCoAdminIds.firstIndex(of: connection.userId) {
-                                // If already selected, remove from both lists
-                                selectedCoAdminIds.remove(at: index)
-                                selectedCoAdminNames.remove(at: index)
-                            } else {
-                                // Otherwise, add to both lists
-                                selectedCoAdminIds.append(connection.userId)
-                                selectedCoAdminNames.append(connection.name)
-                            }
-                        }) {
-                            HStack {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor(.primary)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(connection.name)
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                    if let location = connection.location {
-                                        Text(location)
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                    }
-                                }
-                                Spacer()
-                                
-                                // Show checkmark if selected
-                                if selectedCoAdminIds.contains(connection.userId) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.blue)
-                                }
-                            }
-                            .padding()
-                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.systemBackground)))
+            ForEach(viewModel.filteredConnections, id: \.userId) { connection in // ✅ Ensure uniqueness
+                HStack {
+                    AsyncImage(url: URL(string: connection.profilePhoto ?? "")) { imagePhase in
+                        if let image = imagePhase.image {
+                            image.resizable().scaledToFill()
+                        } else {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundColor(.gray)
                         }
                     }
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                    
+                    Text(connection.name)
+                        .font(.body)
+
+                    Spacer()
+                    
+                    let isSelected = selectedCoAdminIds.contains(connection.userId)
+                    
+                    Button(action: {
+                        if isSelected {
+                            if let index = selectedCoAdminIds.firstIndex(of: connection.userId) {
+                                selectedCoAdminIds.remove(at: index)
+                                selectedCoAdminNames.remove(at: index)
+                                selectedCoAdminPhotos.remove(at: index)
+                            }
+                        } else {
+                            selectedCoAdminIds.append(connection.userId)
+                            selectedCoAdminNames.append(connection.name)
+                            selectedCoAdminPhotos.append(connection.profilePhoto ?? "")
+                        }
+                    }) {
+                        Image(systemName: isSelected ? "minus.circle.fill" : "plus.circle.fill")
+                            .foregroundColor(isSelected ? .red : .blue)
+                    }
                 }
-                .padding(.horizontal)
+                .padding(.vertical, 5)
             }
         }
-        .background(Color(UIColor.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 5)
     }
 }
