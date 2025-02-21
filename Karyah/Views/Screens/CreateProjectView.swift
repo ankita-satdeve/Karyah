@@ -114,7 +114,6 @@ struct CreateProjectView: View {
                     //                        }
                     //                    }
                     //                    .padding()
-                    
                 }
                 .padding()
             }
