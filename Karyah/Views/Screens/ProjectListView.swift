@@ -64,7 +64,7 @@ struct ProjectListView: View {
                         ScrollView(.vertical, showsIndicators: false) {
                             ScrollViewReader { proxy in
                                 LazyVStack(spacing: 12) {
-                                    ForEach(viewModel.projects) { project in
+                                    ForEach(filteredProjects) { project in
                                         NavigationLink(destination: ProjectDetailView(projectId: project.id)) {
                                             ProjectCard(project: project)
                                                 .id(project.id)
@@ -83,7 +83,6 @@ struct ProjectListView: View {
             }
             FloatingAddProjectButton()
         }
-        
     }
 }
 #Preview {

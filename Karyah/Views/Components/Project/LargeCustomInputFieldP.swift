@@ -18,14 +18,15 @@ struct LargeCustomInputFieldP: View {
             HStack {
                 if isMultiline {
                     TextEditor(text: $text)
-                        .frame(minHeight: 250, maxHeight: .infinity) 
+                        .frame(minHeight: 450, maxHeight: .infinity)
                         .padding(5)
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
                 } else {
                     TextField(placeholder, text: $text)
-                        .frame(height: 50) // Standard height for single-line input
+                        .frame(height: 120)
                         .cornerRadius(10)
+                        .padding(.top, -50)
                 }
 
             }

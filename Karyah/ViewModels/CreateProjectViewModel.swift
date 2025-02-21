@@ -25,8 +25,11 @@ class CreateProjectViewModel: ObservableObject {
     @Published var createdAt = Date()
     @Published var updatedAt = Date()
     
+    let apiUrl = "\(BaseURL.url)/projects"
+    
     func submitProject() {
-        guard let url = URL(string: "https://api.karyah.in/api/projects/create") else {
+   
+        guard let url = URL(string: "\(apiUrl)/create") else {
             print("Invalid URL")
             return
         }

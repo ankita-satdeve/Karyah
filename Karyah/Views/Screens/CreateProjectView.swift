@@ -20,6 +20,7 @@ struct CreateProjectView: View {
                     HeaderCard(title: "Create New Project", description: nil, buttonText: nil, buttonAction: false)
                     
                     Divider()
+                        .padding(.horizontal)
                     
                     // Form Section
                     VStack(alignment: .leading, spacing: 15) {
@@ -43,12 +44,12 @@ struct CreateProjectView: View {
                                 CustomInputFieldP(icon: "chevron.up.chevron.down",
                                                   placeholder: "Project Category",
                                                   text: $viewModel.projectCategory,
-                                                  options: ["Category1", "Category2", "Category3"])
+                                                  options: ["Residential", "Commercial", "Industrial"])
                                 
                                 CustomInputFieldP(icon: "chevron.up.chevron.down",
                                                   placeholder: "Location",
                                                   text: $viewModel.location,
-                                                  options: ["Location1", "Location2", "Location3"])
+                                                  options: ["Mumbai", "Pune", "Nagpur"])
                                 
                                 // Co-Admin Dropdown
                                 VStack(alignment: .leading, spacing: 8) {

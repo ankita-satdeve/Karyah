@@ -18,12 +18,14 @@ class ProjectListViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
+        let apiUrl = "\(BaseURL.url)/projects"
+    
     init() {
         fetchProjects()
     }
-
+    
     func fetchProjects() {
-        guard let url = URL(string: "https://api.karyah.in/api/projects/") else {
+        guard let url = URL(string: "\(apiUrl)/") else {
             errorMessage = "Invalid URL"
             isLoading = false
             return
@@ -62,7 +64,7 @@ class ProjectListViewModel: ObservableObject {
 
     
     func fetchProject(by id: String) {
-            guard let url = URL(string: "https://api.karyah.in/api/projects/\(id)") else {
+        guard let url = URL(string: "\(apiUrl)/\(id)") else {
                 errorMessage = "Invalid URL"
                 isLoading = false
                 return

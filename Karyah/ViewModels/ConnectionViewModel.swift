@@ -14,9 +14,11 @@ class ConnectionViewModel: ObservableObject {
     @Published var filteredConnections: [Connection] = []
     @Published var isDropdownVisible = false
     @Published var searchText = ""
+    
+    let apiUrl = "\(BaseURL.url)/connections"
 
     func fetchManageConnections() {
-        let url = "https://api.karyah.in/api/connections/list"
+        let url = "\(apiUrl)/list"
 
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
             print("Token not found")
