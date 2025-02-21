@@ -81,8 +81,9 @@ struct ProjectListView: View {
                     .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
                 }
             }
+            FloatingAddProjectButton()
         }
-        FloatingAddProjectButton()
+        
     }
 }
 #Preview {

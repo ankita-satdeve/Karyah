@@ -107,54 +107,11 @@ struct ProjectDetailView: View {
                             
                             
                             ProjectDetailCoAdminRow(
-                                label: "Co-Admins",
-                                value: project.coAdmins?.map { $0.name }.joined(separator: ", ") ?? "N/A"
+                                label: "Co-Admins: ",
+                                coAdmins: project.coAdmins
                             )
-
-                            // Co-Admins List (Detailed View)
-//                            if let coAdmins = project.coAdmins, !coAdmins.isEmpty {
-//                                VStack(alignment: .leading) {
-//                                    Text("Co-Admins:")
-//                                        .font(.headline)
-//                                        .padding(.top, 8)
-//                                    ForEach(coAdmins, id: \.id) { coAdmin in
-//                                        Text("- \(coAdmin.name) (📧 \(coAdmin.profilePhoto))")
-//                                    }
-//                                }
-//                                .padding(.horizontal)
-//                            }
-
-                            
-                            if let coAdmins = project.coAdmins, !coAdmins.isEmpty {
-                                VStack(alignment: .leading) {
-                                    Text("Co-Admins:")
-                                        .font(.headline)
-                                        .padding(.top, 8)
-
-                                    ForEach(coAdmins, id: \.id) { coAdmin in
-                                        HStack(spacing: 10) {
-                                            AsyncImage(url: URL(string: coAdmin.profilePhoto ?? "")) { phase in
-                                                if let image = phase.image {
-                                                    image.resizable()
-                                                        .scaledToFill()
-                                                } else {
-                                                    Image(systemName: "person.circle.fill")
-                                                        .resizable()
-                                                        .scaledToFit()
-                                                        .foregroundColor(.gray)
-                                                }
-                                            }
-                                            .frame(width: 40, height: 40)
-                                            .clipShape(Circle())
-
-                                            Text(coAdmin.name)
-                                                .font(.body)
-                                        }
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
-
+                            .padding(.horizontal)
+                        
                             
                             ProjectDetailDescriptionRow(label: "Description", value: project.description ?? "N/A")
                             

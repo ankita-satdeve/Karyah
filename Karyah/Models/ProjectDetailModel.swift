@@ -30,7 +30,6 @@ struct ProjectDetailModel: Identifiable, Codable {
         var id: Int { userId }
         var userId: Int
         var name: String
-        var email: String
         var profilePhoto: String?
     }
     /// **Formatted End Date**
@@ -51,7 +50,7 @@ struct ProjectDetailModel: Identifiable, Codable {
             
             if let date = formatter.date(from: isoDate) {
                 let outputFormatter = DateFormatter()
-                outputFormatter.dateFormat = "dd MMM, yyyy" // Example: 21 Feb, 2025
+                outputFormatter.dateFormat = "dd MMM, yyyy"
                 return outputFormatter.string(from: date)
             }
             return "N/A"
