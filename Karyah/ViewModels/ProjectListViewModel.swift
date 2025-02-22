@@ -96,6 +96,47 @@ class ProjectListViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         }
+    
+    func updateProject(_ project: ProjectDetailModel, completion: @escaping () -> Void) {
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            print("Token not found")
+            return
+        }
+        
+        guard let url = URL(string: "\(apiUrl)/\(project.id)") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            let jsonData = try JSONEncoder().encode(project)
+            request.httpBody = jsonData
+        } catch {
+            print("Failed to encode project: \(error)")
+            return
+        }
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Update failed: \(error.localizedDescription)")
+                    return
+                }
+
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    print("Project updated successfully")
+                    completion()
+                } else {
+                    print("Failed to update project")
+                }
+            }
+        }.resume()
+    }
 
     var filteredProjects: [ProjectModel] {
         guard !searchText.isEmpty else { return projects }

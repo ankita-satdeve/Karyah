@@ -8,11 +8,31 @@
 import SwiftUI
 
 struct UpdateProjectView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @State var project: ProjectDetailModel
+    @ObservedObject var viewModel: ProjectListViewModel
+    @Environment(\.dismiss) var dismiss
 
-#Preview {
-    UpdateProjectView()
+    var body: some View {
+        Form {
+            Section(header: Text("Project Details")) {
+                TextField("Project Name", text: $project.projectName)
+                TextField("Location", text: Binding(
+                    get: { project.location ?? "" },
+                    set: { project.location = $0.isEmpty ? nil : $0 }
+                ))
+                TextField("Description", text: Binding(
+                    get: { project.description ?? "" },
+                    set: { project.description = $0.isEmpty ? nil : $0 }
+                ))
+            }
+
+            Button("Save Changes") {
+                viewModel.updateProject(project) {
+                    dismiss() // Close view after successful update
+                }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .navigationTitle("Edit Project")
+    }
 }

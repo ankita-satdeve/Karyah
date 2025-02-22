@@ -9,12 +9,8 @@ import SwiftUI
 
 struct ProjectDetailView: View {
     @StateObject var viewModel = ProjectListViewModel()
+    @State private var isEditing = false
     var projectId: String
-//    let currentUserId = UserDefaults.standard.integer(forKey: "userId") // Retrieve logged-in user ID
-//      if let userId = UserDefaults.standard.value(forKey: "userId") as? Int {
-//      print("Retrieved UserId: \(userId)")
-//  }
-    
     let currentUserId = UserDefaults.standard.value(forKey: "userId") as! Int
     
     var body: some View {
@@ -32,23 +28,14 @@ struct ProjectDetailView: View {
                                 .multilineTextAlignment(.center)
                                 .padding()
                         } else if let project = viewModel.project {
-                            
-                            
-                            
-                             // Makes background transparent
-
 
                             // Edit Button - Show only if the user is the owner
                             HStack {
                                 Spacer()
-                                if project.userId == currentUserId {
                                     Menu {
                                         Button(action: {
                                             print("Edit project")
-                                            
-                                            // it should enable to edit of the fields
-                                            
-                                            
+                                            isEditing = true
                                             
                                         }) {
                                             Text("Edit project")
@@ -63,8 +50,7 @@ struct ProjectDetailView: View {
                                     .background(Color.clear)
                                     .frame(alignment: .topLeading)
                                     .padding(.top, -45)
-                                }
-                                    
+        
                             }
                             
                             
@@ -181,17 +167,25 @@ struct ProjectDetailView: View {
                             }
                             .padding()
                         }
-                       
+                            
+                        
                     }
                     .padding(.vertical)
+                    .navigationDestination(isPresented: $viewModel.isNavigatingToDetails) {
+                        ProjectListView()
+                    }
+
                 }
-                .navigationDestination(isPresented: $viewModel.isNavigatingToDetails) {
-                            ProjectListView()
-                            }
+                
             }
         }
         .onAppear {
             viewModel.fetchProject(by: projectId)
+        }
+        .navigationDestination(isPresented: $isEditing) {
+            if let project = viewModel.project {
+                UpdateProjectView(project: project, viewModel: viewModel)
+            }
         }
     }
 }
