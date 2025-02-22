@@ -87,11 +87,32 @@ class CreateProjectViewModel: ObservableObject {
             if let httpResponse = response as? HTTPURLResponse {
                 print("HTTP Status Code: \(httpResponse.statusCode)")
             }
-
+            
+            //            if let data = data {
+            //                print("Response Data: \(String(data: data, encoding: .utf8) ?? "No Data")")
+            //            }
+            
             if let data = data {
-                print("Response Data: \(String(data: data, encoding: .utf8) ?? "No Data")")
+                do {
+                    let responseJson = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    print("Response Data: \(responseJson ?? [:])")
+                    
+                    if let project = responseJson?["project"] as? [String: Any],
+                       let userId = project["userId"] as? Int {
+                        
+                        // Store userId in UserDefaults
+                        UserDefaults.standard.set(userId, forKey: "userId")
+                        print("UserId saved: \(userId)")
+                        
+                        DispatchQueue.main.async {
+                            self.isNavigatingToDetails = true
+                        }
+                    }
+                } catch {
+                    print("Error parsing response: \(error.localizedDescription)")
+                }
             }
-
+            
             DispatchQueue.main.async {
                 self.isNavigatingToDetails = true
             }

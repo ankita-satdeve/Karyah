@@ -10,13 +10,19 @@ import SwiftUI
 struct ProjectDetailView: View {
     @StateObject var viewModel = ProjectListViewModel()
     var projectId: String
+//    let currentUserId = UserDefaults.standard.integer(forKey: "userId") // Retrieve logged-in user ID
+//      if let userId = UserDefaults.standard.value(forKey: "userId") as? Int {
+//      print("Retrieved UserId: \(userId)")
+//  }
+    
+    let currentUserId = UserDefaults.standard.value(forKey: "userId") as! Int
     
     var body: some View {
         NavigationStack{
             GeometryReader { geometry in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        
+
                         if viewModel.isLoading {
                             ProgressView("Loading Project...")
                                 .frame(maxWidth: .infinity, minHeight: 200)
@@ -26,6 +32,29 @@ struct ProjectDetailView: View {
                                 .multilineTextAlignment(.center)
                                 .padding()
                         } else if let project = viewModel.project {
+
+                            // Edit Button - Show only if the user is the owner
+                            HStack {
+                                Spacer()
+                                if project.userId == currentUserId {
+                                    Menu {
+                                        Button(role: .none, action: {
+                                            print("Edit Project")
+                                        }) {
+                                            Text("Edit Project")
+                                                .foregroundColor(.primary)
+                                        }
+                                    } label: {
+                                        Image("menu")
+                                            .foregroundColor(.primary)
+                                            .padding()
+                                    }
+                                    .frame(alignment: .topLeading)
+                                    .padding(.top, -45)
+                                }
+                                    
+                            }
+                            
                             
                             // Header Card
                             HStack {
@@ -45,6 +74,10 @@ struct ProjectDetailView: View {
                                 .padding()
                                 
                                 Spacer()
+                                
+                                
+                                
+                                
                                 CircularProgressHeaderView(progress: 0.75)
                                     .foregroundColor(.white)
                                     .fontWeight(.bold)
@@ -150,3 +183,5 @@ struct ProjectDetailView: View {
         }
     }
 }
+
+
