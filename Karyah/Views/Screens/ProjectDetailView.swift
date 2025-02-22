@@ -32,23 +32,35 @@ struct ProjectDetailView: View {
                                 .multilineTextAlignment(.center)
                                 .padding()
                         } else if let project = viewModel.project {
+                            
+                            
+                            
+                             // Makes background transparent
+
 
                             // Edit Button - Show only if the user is the owner
                             HStack {
                                 Spacer()
                                 if project.userId == currentUserId {
                                     Menu {
-                                        Button(role: .none, action: {
-                                            print("Edit Project")
+                                        Button(action: {
+                                            print("Edit project")
+                                            
+                                            // it should enable to edit of the fields
+                                            
+                                            
+                                            
                                         }) {
-                                            Text("Edit Project")
+                                            Text("Edit project")
                                                 .foregroundColor(.primary)
                                         }
                                     } label: {
-                                        Image("menu")
+                                        Image("menu") 
                                             .foregroundColor(.primary)
                                             .padding()
                                     }
+                                    .menuStyle(BorderlessButtonMenuStyle()) // Removes default button styling
+                                    .background(Color.clear)
                                     .frame(alignment: .topLeading)
                                     .padding(.top, -45)
                                 }
