@@ -13,6 +13,7 @@ struct ProjectDetailView: View {
     var projectId: String
     let currentUserId = UserDefaults.standard.value(forKey: "userId") as! Int
     
+    
     var body: some View {
         NavigationStack{
             GeometryReader { geometry in
@@ -174,7 +175,9 @@ struct ProjectDetailView: View {
                     .navigationDestination(isPresented: $viewModel.isNavigatingToDetails) {
                         ProjectListView()
                     }
-
+//                    .navigationDestination(isPresented: $isEditing) {
+//                        UpdateProjectView(project: project)
+//                    }
                 }
                 
             }
@@ -184,9 +187,10 @@ struct ProjectDetailView: View {
         }
         .navigationDestination(isPresented: $isEditing) {
             if let project = viewModel.project {
-                UpdateProjectView(project: project, viewModel: viewModel)
+                UpdateProjectView(project: project, projectViewModel: viewModel)
             }
         }
+
     }
 }
 

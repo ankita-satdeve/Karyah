@@ -35,24 +35,24 @@ struct ProjectDetailModel: Identifiable, Codable {
     /// **Formatted End Date**
     var formattedEndDate: String {
         formatDate(from: endDate)
-        }
-
-        /// **Formatted Start Date**
-        var formattedStartDate: String {
-            formatDate(from: startDate)
-        }
-
-        /// Helper function to convert ISO8601 date to `"21 Feb, 2025"` format
-        private func formatDate(from isoDate: String?) -> String {
-            guard let isoDate = isoDate else { return "N/A" }
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
-            
-            if let date = formatter.date(from: isoDate) {
-                let outputFormatter = DateFormatter()
-                outputFormatter.dateFormat = "dd MMM, yyyy"
-                return outputFormatter.string(from: date)
-            }
-            return "N/A"
-        }
     }
+    
+    /// **Formatted Start Date**
+    var formattedStartDate: String {
+        formatDate(from: startDate)
+    }
+    
+    /// Helper function to convert ISO8601 date to `"21 Feb, 2025"` format
+    private func formatDate(from isoDate: String?) -> String {
+        guard let isoDate = isoDate else { return "N/A" }
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+        
+        if let date = formatter.date(from: isoDate) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "dd MMM, yyyy"
+            return outputFormatter.string(from: date)
+        }
+        return "N/A"
+    }
+}
