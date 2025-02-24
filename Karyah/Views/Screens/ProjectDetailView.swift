@@ -77,7 +77,7 @@ struct ProjectDetailView: View {
                                 
                                 
                                 
-                                CircularProgressHeaderView(progress: 0.75)
+                                CircularProgressHeaderView(progress: project.progress ?? 0)
                                     .foregroundColor(.white)
                                     .fontWeight(.bold)
                                     .frame(width: 70, height: 70)
@@ -109,7 +109,8 @@ struct ProjectDetailView: View {
                                         .scaledToFit()
                                         .foregroundColor(.orange)
                                         .frame(width: 12, height: 12)
-                                    Text("In-Progress")
+                                    
+                                    Text(displayStatus(for: project.status))
                                         .font(.caption)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.orange)
@@ -191,6 +192,15 @@ struct ProjectDetailView: View {
             }
         }
 
+    }
+    
+    func displayStatus(for status: String?) -> String {
+        switch status?.lowercased() {
+        case "pending": return "Pending"
+        case "in progress": return "In Progress"
+        case "completed": return "Completed"
+        default: return "No Status"
+        }
     }
 }
 

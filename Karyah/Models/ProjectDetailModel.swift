@@ -21,6 +21,8 @@ struct ProjectDetailModel: Identifiable, Codable {
     var coAdmins: [CoAdmin]?
     var projectCategory: String?
     var description: String?
+    var progress: Int?
+    var status: String?
     var taskCount: Int?
     var userId: Int
     var createdAt: String

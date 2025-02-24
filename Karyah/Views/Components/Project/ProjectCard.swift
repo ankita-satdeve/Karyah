@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProjectCard: View {
     let project: ProjectModel
+    @StateObject var viewModel = ProjectListViewModel()
     
     var body: some View {
         HStack(spacing: 12) {
@@ -61,7 +62,7 @@ struct ProjectCard: View {
 //            .padding()
             
             HStack {
-                CircularProgressView(progress: 0.80)
+                CircularProgressView(progress: viewModel.project?.progress ?? 0)
                     .foregroundColor(.white)
                     .fontWeight(.bold)
                     .padding()

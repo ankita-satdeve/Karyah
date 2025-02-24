@@ -15,11 +15,12 @@ struct ProjectModel: Identifiable, Codable {
     var endDate: String?
     var coAdmins: [Int]?
     var projectCategory: String?
+    var progress: Int?
     var description: String?
     var taskCount: Int?
     var userId: Int
-    var createdAt: String
-    var updatedAt: String
+    var createdAt: String?
+    var updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id
