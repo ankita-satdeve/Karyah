@@ -9,16 +9,16 @@
 import SwiftUI
 import Alamofire
 
-class ConnectionViewModel: ObservableObject {
-    @Published var connections: [Connection] = []
-    @Published var filteredConnections: [Connection] = []
+class ConnectionListViewModel: ObservableObject {
+    @Published var connections: [ConnectionList] = []
+    @Published var filteredConnections: [ConnectionList] = []
     @Published var isDropdownVisible = false
     @Published var searchText = ""
     
-    let apiUrl = "\(BaseURL.url)/connections"
+//    let apiUrl = "\(BaseURL.url)/connections"
 
-    func fetchManageConnections() {
-        let url = "\(apiUrl)/list"
+    func fetchManageListConnections() {
+        let url = "https://api.karyah.in/api/connections/list"
 
         guard let token = UserDefaults.standard.string(forKey: "userToken") else {
             print("Token not found")
@@ -30,7 +30,7 @@ class ConnectionViewModel: ObservableObject {
             "Content-Type": "application/json"
         ]
 
-        AF.request(url, method: .get, headers: headers).responseDecodable(of: ConnectionResponse.self) { response in
+        AF.request(url, method: .get, headers: headers).responseDecodable(of: ConnectionListResponse.self) { response in
             DispatchQueue.main.async {
                 switch response.result {
                 case .success(let data):

@@ -13,7 +13,7 @@ class ManageConnectionsViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     func fetchManageConnections() {
-        guard let url = URL(string: "\(ConnectionBaseURL.url)/list") else {
+        guard let url = URL(string: "https://api.karyah.in/api/connections/list") else {
             errorMessage = "Invalid URL"
             return
         }
@@ -21,7 +21,15 @@ class ManageConnectionsViewModel: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        let token = TokenStorage.token  // ✅ Ensure this contains a valid token
+        // Retrieve token from UserDefaults
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            DispatchQueue.main.async {
+                self.errorMessage = "No authentication token found!"
+                self.isLoading = false
+            }
+            return
+        }
+        
         print("🔐 Token being sent: \(token)")
 
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization") 

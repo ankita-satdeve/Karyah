@@ -76,7 +76,7 @@ struct SidebarView: View {
     private func navigate(to destination: NavigationDestination) {
         withAnimation {
             isDrawerOpen = false
-            navigationPath.append(destination)
+            navigationPath.append(destination)  // ✅ Ensure this is correctly modifying the path
         }
     }
 }

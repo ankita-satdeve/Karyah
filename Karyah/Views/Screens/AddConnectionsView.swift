@@ -13,7 +13,7 @@ struct AddConnectionsView: View {
     @State private var requestSent = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 
                 Button(action: {
@@ -80,7 +80,7 @@ struct AddConnectionsView: View {
                 } else {
                     List(viewModel.connections) { connection in
                         HStack {
-                            Image("Profile")
+                            Image("profile")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .foregroundColor(.gray)
@@ -97,11 +97,12 @@ struct AddConnectionsView: View {
                             Spacer()
                             Button(action: {
                                 // Add connection action
-                                let token = TokenStorage.token
+                                let token =  UserDefaults.standard.string(forKey: "userToken")
+                                
                                 let recipientId = connection.id
                                 
                                 
-                                addNewConnection(recipientId: recipientId, token: token)
+                                addNewConnection(recipientId: recipientId, token: token ?? "invalid token")
                                 requestSent = true
                             }) {
                                 Text(requestSent ? "Request Sent" : "ADD")

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ManageConnectionView: View {
-    @StateObject private var viewModel = ConnectionViewModel()
+struct ManageListConnectionView: View {
+    @StateObject private var viewModel = ConnectionListViewModel()
     @State private var selectedCoAdmins: [Int] = []
     @State private var selectedCoAdminNames: [String] = []
     
@@ -24,7 +24,7 @@ struct ManageConnectionView: View {
                     
                     Button(action: {
                         viewModel.isDropdownVisible.toggle()
-                        viewModel.fetchManageConnections()
+                        viewModel.fetchManageListConnections()
                     }) {
                         Image(systemName: "person.crop.circle.fill.badge.plus")
                             .resizable()

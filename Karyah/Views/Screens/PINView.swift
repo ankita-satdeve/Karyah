@@ -142,7 +142,7 @@ struct PINView: View {
             }
             .ignoresSafeArea()
             .fullScreenCover(isPresented: $pinViewModel.navigateToDashboard) {
-                ProjectListView() //DashboardView()
+                DashboardView(navigationPath: .constant(NavigationPath())) // Provide a Binding to NavigationPath
             }
         }
     }

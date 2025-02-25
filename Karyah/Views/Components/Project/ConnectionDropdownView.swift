@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConnectionDropdownView: View {
-    @ObservedObject var viewModel: ConnectionViewModel
+    @ObservedObject var viewModel: ConnectionListViewModel
     @Binding var selectedCoAdminIds: [Int]
     @Binding var selectedCoAdminNames: [String]
     @Binding var selectedCoAdminPhotos: [String]

@@ -12,13 +12,13 @@ struct DashboardView: View {
     @StateObject private var dashboardViewModel = DashboardViewModel()
     @Binding var navigationPath: NavigationPath // ✅ Accept navigationPath as Binding
     
-    
     var body: some View {
-        ZStack {
+        NavigationStack(path: $navigationPath) {
+            ZStack {
                 // Background color to match system theme
                 Color(UIColor.systemBackground)
                     .edgesIgnoringSafeArea(.all)
-
+                
                 VStack(spacing: 0) {
                     // Fixed Header
                     HeaderView(navigationPath: $navigationPath) // ✅ Pass navigationPath
@@ -29,7 +29,7 @@ struct DashboardView: View {
                     // Scrollable Content
                     ScrollView {
                         VStack(spacing: 16) {
-                                PieChartSection()
+                            PieChartSection()
                                 .padding(.vertical, 30)
                                 .padding()
                             
@@ -47,7 +47,7 @@ struct DashboardView: View {
                         VStack {
                             Text("🏠 Welcome to Dashboard!")
                                 .font(.largeTitle)
-                  
+                            
                             Button("Logout") {
                                 authManager.logout()
                             }
@@ -57,26 +57,44 @@ struct DashboardView: View {
                         
                     }
                 }
-
+                
                 // Fixed Floating Button
                 VStack {
                     Spacer()
                     FloatingAddButton()
-//                        .padding(.bottom, 0) // Safe area padding
+                    //                        .padding(.bottom, 0) // Safe area padding
                 }
             }
-//            .navigationTitle("Dashboard")
-        .navigationBarHidden(true) // ✅ Hide default navigation bar
-//            .navigationBarHidden(true) // Hide default nav bar
             
+            .navigationDestination(for: NavigationDestination.self) { destination in
+                switch destination {
+                case .projectList:
+                    ProjectListView()  // ✅ Make sure this view exists
+                case .taskList:
+                    ProjectListView()//TaskListView()  // ✅ Replace with actual TaskListView
+                case .connectionList:
+                    ProjectListView()//ConnectionsListView()  // ✅ Replace with actual ConnectionsListView
+                case .profile:
+                    ProfileView()  // ✅ Ensure ProfileView is implemented
+                case .settings:
+                    ProjectListView()//SettingsView()  // ✅ Replace with actual SettingsView
+                case .help:
+                    ProjectListView()//HelpView()  // ✅ Replace with actual HelpView
+                }
+            }
+        }
+        //            .navigationTitle("Dashboard")
+        .navigationBarHidden(true) // ✅ Hide default navigation bar
+        //            .navigationBarHidden(true) // Hide default nav bar
+        
         
     }
 }
 
 
 
-       
-// 
+
+//
 //
 //struct DashboardView_Previews: PreviewProvider {
 //    static var previews: some View {

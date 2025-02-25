@@ -12,7 +12,7 @@ struct ManageConnectionsView: View {
     @State private var navigateToAddConnection = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 // Header Section with Add Button
                 ZStack {
@@ -66,7 +66,7 @@ struct ManageConnectionsView: View {
                 } else {
                     List(viewModel.manageConnections) { connection in
                         HStack {
-                            Image("Profile")
+                            Image("profile")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .foregroundColor(.gray)

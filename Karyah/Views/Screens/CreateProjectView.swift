@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateProjectView: View {
     @StateObject private var viewModel = CreateProjectViewModel()
-    @StateObject private var connectionViewModel = ConnectionViewModel()
+    @StateObject private var connectionViewModel = ConnectionListViewModel()
     
     var body: some View {
         NavigationView {
@@ -91,7 +91,7 @@ struct CreateProjectView: View {
                                         
                                         Button(action: {
                                             connectionViewModel.isDropdownVisible.toggle()
-                                            connectionViewModel.fetchManageConnections()
+                                            connectionViewModel.fetchManageListConnections()
                                         }) {
                                             Image(systemName: "person.crop.circle.fill.badge.plus")
                                                 .resizable()

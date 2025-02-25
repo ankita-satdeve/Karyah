@@ -171,12 +171,12 @@ struct OTPView: View {
                 }
             }
             .ignoresSafeArea()
-            .fullScreenCover(isPresented: $viewModel.navigateToRegister) {
-                ProfileView()           //RegisterView()
-            }
-            .fullScreenCover(isPresented: $viewModel.navigateToDashboard) {
-                ProfileView()           //DashboardView()
-            }
+//            .fullScreenCover(isPresented: $viewModel.navigateToRegister) {
+//                DashboardView()           //RegisterView()
+//            }
+//            .fullScreenCover(isPresented: $viewModel.navigateToDashboard) {
+//                DashboardView()   //ProfileView()
+//            }
         }
     }
 

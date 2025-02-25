@@ -9,9 +9,10 @@ import SwiftUI
 
 struct PendingRequestView: View {
     @StateObject private var viewModel = PendingRequestViewModel()
+    let token = UserDefaults.standard.string(forKey: "userToken")
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 // Header
                 ZStack {
@@ -62,7 +63,7 @@ struct PendingRequestView: View {
                     List(viewModel.pendingRequests) { request in
                         VStack(alignment: .leading) {
                             HStack(alignment: .top, spacing: 12) {
-                                Image("Profile")
+                                Image("profile")
                                     .resizable()
                                     .frame(width: 50, height: 50)
                                     .clipShape(Circle())
@@ -158,10 +159,13 @@ struct PendingRequestView: View {
         viewModel.errorMessage = nil
 
         let url = URL(string: "https://api.karyah.in/api/connections/accept-request")!
+        // Retrieve token from UserDefaults
+        let token = UserDefaults.standard.string(forKey: "userToken")
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(String(describing: token))", forHTTPHeaderField: "Authorization")
 
         let body: [String: Any] = ["connectionId": connectionId]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
@@ -187,12 +191,12 @@ struct PendingRequestView: View {
     func rejectConnection(connectionId: Int) {
         viewModel.isLoading = true
         viewModel.errorMessage = nil
-
+        let token = UserDefaults.standard.string(forKey: "userToken")
         let url = URL(string: "https://api.karyah.in/api/connections/reject-request")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(String(describing: token))", forHTTPHeaderField: "Authorization")
 
         let body: [String: Any] = ["connectionId": connectionId]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)

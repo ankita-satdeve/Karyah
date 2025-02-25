@@ -13,18 +13,23 @@ struct KaryahApp: App {
     var body: some Scene {
         WindowGroup {
             
-//            ProjectDetailView()
+            //            ProjectDetailView()
             
-              ProjectListView()
+            //              ProjectListView()
             
-//            PINView()
-//            ProfileView()
+            //            PINView()
+            //            ProfileView()
             
-//            ManageConnectionView()
-//            
-//            ContentView()
-//                .environmentObject(authManager) // Inject it here, now  all child views (including DashboardView) will have access to authManager.
-           
+            //            ManageListConnectionView()
+            
+            //
+            //            AddConnectionsView()
+            
+            //            ManageConnectionsView()
+            
+            
+            ContentView()
+                .environmentObject(authManager) // Inject it here, now  all child views (including DashboardView) will have access to authManager.
         }
     }
 }

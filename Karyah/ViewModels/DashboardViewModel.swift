@@ -34,3 +34,4 @@ class DashboardViewModel: ObservableObject {
         ]
     }
 }
+

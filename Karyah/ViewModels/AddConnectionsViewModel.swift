@@ -21,21 +21,21 @@ class AddConnectionsViewModel: ObservableObject {
         
         isLoading = true
         errorMessage = nil
-        let url = URL(string: "\(ConnectionBaseURL.url)/search")!
+        let url = URL(string: "https://api.karyah.in/api/connections/search")!
 //        let url = URL(string: "https://api.karyah.in/api/connections/search")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
         // Retrieve token from UserDefaults
-//        guard let token = UserDefaults.standard.string(forKey: "authToken") else {
-//            DispatchQueue.main.async {
-//                self.errorMessage = "No authentication token found!"
-//                self.isLoading = false
-//            }
-//            return
-//        }
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            DispatchQueue.main.async {
+                self.errorMessage = "No authentication token found!"
+                self.isLoading = false
+            }
+            return
+        }
         
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!

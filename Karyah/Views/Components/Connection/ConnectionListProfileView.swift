@@ -1,5 +1,5 @@
 //
-//  ConnectionProfileView.swift
+//  ConnectionListProfileView.swift
 //  Karyah
 //
 //  Created by Prance Studio on 10/02/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ConnectionProfileView: View {
+struct ConnectionListProfileView: View {
     @Environment(\.colorScheme) var colorScheme // Detect Dark/Light mode
     
     var body: some View {
@@ -38,7 +38,7 @@ struct ConnectionProfileView: View {
                 .padding(.horizontal)
                 
                 // Profile Image
-                Image("Profile")
+                Image("profile")
                     .resizable()
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())
@@ -83,11 +83,11 @@ struct ConnectionProfileView: View {
                         .bold()
                     
                     HStack {
-                        CategoryButton(title: "Category 1", color: Color(UIColor.systemBackground))
+                        CategoryConnectionButton(title: "Category 1", color: Color(UIColor.systemBackground))
                             .background(LinearGradient(gradient: Gradient(colors: [Color(hex: "#C6381E"), Color(hex: "#9E240F")]), startPoint: .bottomTrailing, endPoint: .topLeading))
                             .cornerRadius(10)
-                        CategoryButton(title: "Category 2", color: .gray)
-                        CategoryButton(title: "Category 3", color: .gray)
+                        CategoryConnectionButton(title: "Category 2", color: .gray)
+                        CategoryConnectionButton(title: "Category 3", color: .gray)
                     }
                     
                 }
@@ -102,7 +102,7 @@ struct ConnectionProfileView: View {
 }
 
 // Category Button Component
-struct CategoryButton: View {
+struct CategoryConnectionButton: View {
     var title: String
     var color: Color
     
@@ -118,13 +118,13 @@ struct CategoryButton: View {
 }
 
 // Preview
-struct ConnectionProfileView_Previews: PreviewProvider {
+struct ConnectionListProfileView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConnectionProfileView()
+            ConnectionListProfileView()
                 .previewDevice("iPhone 14 Pro")
             
-            ConnectionProfileView()
+            ConnectionListProfileView()
                 .previewDevice("iPhone SE (3rd generation)")
                 .environment(\.colorScheme, .dark)
         }

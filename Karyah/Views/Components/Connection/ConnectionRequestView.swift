@@ -15,7 +15,7 @@ struct ConnectionRequestView: View {
         VStack {
             HStack {
                 // Profile Picture
-                Image("Profile")
+                Image("profile")
                     .resizable()
                     .frame(width: 50, height: 50)
                     .clipShape(Circle())
@@ -103,10 +103,20 @@ struct ConnectionRequestView: View {
         errorMessage = nil
 
         let url = URL(string: "https://api.karyah.in/api/connections/accept-request")!
+        
+        // Retrieve token from UserDefaults
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            DispatchQueue.main.async {
+                self.errorMessage = "No authentication token found!"
+                self.isLoading = false
+            }
+            return
+        }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         let body: [String: Any] = ["requesterId": 14]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
@@ -133,10 +143,19 @@ struct ConnectionRequestView: View {
         errorMessage = nil
 
         let url = URL(string: "https://api.karyah.in/api/connections/reject-request")!
+        
+        guard let token = UserDefaults.standard.string(forKey: "userToken") else {
+            DispatchQueue.main.async {
+                self.errorMessage = "No authentication token found!"
+                self.isLoading = false
+            }
+            return
+        }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenStorage.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         let body: [String: Any] = ["requesterId": 14]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
